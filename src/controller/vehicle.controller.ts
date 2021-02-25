@@ -11,7 +11,7 @@ export default class VehicleController {
         logging.info(NAMESPACE, 'New vehicle');
 
         let requestData = req.body;
-        let vehicle = new VehicleModel({
+        let newVehicle = new VehicleModel({
             make: requestData.make,
             model: requestData.model,
             chasis_number: requestData.chasis_number,
@@ -55,7 +55,7 @@ export default class VehicleController {
                 message: `Vehicle with plate number ${requestData.plate_number } already exist`
             });
 
-            vehicle.save((error, response) => {
+            newVehicle.save((error, response) => {
                 if (error) return this.handleError(res, error);
                 if (response) return res.status(201).json({
                     data: response,
