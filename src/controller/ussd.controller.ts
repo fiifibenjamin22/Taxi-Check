@@ -36,7 +36,7 @@ export default class UssdContoller {
     }
 
     private getVehicleInfo(res: any): string {
-        return `Driver: ${res.driver.name}\nVehicle Make: ${res.make}\nVehicle Type: ${res.type}\nStation: ${res.station}\nMunicipal Assembly: ${res.municipal_assembly}\n`;
+        return `Driver: ${res.driver.name}\nVehicle Make: ${res.make}\nVehicle Type: ${res.model}\nStation: ${res.station}\nMunicipal Assembly: ${res.municipal_assembly}\n`;
     }
 
     private divider = (): string => '\n-----------------\n';
