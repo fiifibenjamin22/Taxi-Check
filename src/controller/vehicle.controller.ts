@@ -48,13 +48,23 @@ export default class VehicleController {
             }
         });
 
-        vehicle.save((error, response) => {
-            if (error) return this.handleError(res, error);
-            if (response) return res.status(201).json({
-                data: response,
-                message: 'Vehicle added'
+        VehicleModel.findOne({ plate_number: requestData.plate_number }, (err, vehicle) => {
+            if (err) return this.handleError(res, err);
+            if (vehicle) return res.status(409).json({
+                data: vehicle,
+                message: `Vehicle with plate number ${requestData.plate_number } already exist`
             });
-        });
+
+            vehicle.save((error, response) => {
+                if (error) return this.handleError(res, error);
+                if (response) return res.status(201).json({
+                    data: response,
+                    message: 'Vehicle added'
+                });
+            });
+        })
+
+
     }
 
     public fetchVehicles(req: Request, res: Response, next: NextFunction) {
