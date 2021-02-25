@@ -15,10 +15,14 @@ ussdRouter.post('/', (req: any, res: any) => {
 
     if (text !== '') {
         let data = text.split('*');
+        plateNumber = data[0];
 
         if (data.length === 1) {
-            plateNumber = data[0];
-            response = controller.checkVehicleExist(plateNumber);
+
+            controller.checkVehicleExist(plateNumber, (message) => {
+                response = message;
+            });
+
         } else if (data.length > 1) {
 
             if (data[1] == '1') {
@@ -33,15 +37,11 @@ ussdRouter.post('/', (req: any, res: any) => {
 
     }
 
-
-
-
-
     setTimeout(() => {
         res.set("Content-Type: text/plain");
         res.send(response);
         res.end();
-    }, 2000)
+    }, 1500)
 });
 
 export = ussdRouter;

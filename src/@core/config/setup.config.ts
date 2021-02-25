@@ -14,7 +14,7 @@ const MONGO_OPTIONS = {
 
 const MONGO_USERNAME = process.env.MONGO_USERNAME || 'root';
 const MONGO_PASSWORD = process.env.MONGO_USERNAME || 'root';
-const MONGO_HOST = process.env.MONGO_HOST || `cluster0.ao2w3.mongodb.net/toli-db`;
+const MONGO_HOST = process.env.MONGO_HOST || 'cluster0.rhqxe.mongodb.net/taxi-check-db';
 
 const MONGO = {
     host: MONGO_HOST,
