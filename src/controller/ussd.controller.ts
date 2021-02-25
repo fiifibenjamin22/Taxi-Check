@@ -61,7 +61,7 @@ export default class UssdContoller {
                             residential_address: 'EB1/23',
                             postal_address: 'P.O.Bax 998',
                             identification: {
-                                type: 'VOTER ID',
+                                id_type: 'VOTER ID',
                                 number: '578545558'
                             },
                             tin_number: 'A0211020',
@@ -76,7 +76,7 @@ export default class UssdContoller {
                             },
                             residential_address: 'Essikado',
                             identification: {
-                                type: 'VOTER ID',
+                                id_type: 'VOTER ID',
                                 number: '2369201096'
                             },
                             tin_number: 'ABD3244',

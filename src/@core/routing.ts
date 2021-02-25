@@ -1,5 +1,6 @@
 
 import ussdRouter from '../controller/routes/ussd.routes';
+import vehicleRouter from '../controller/routes/vehicle.route';
 import logging from './logging';
 
 const NAMESPACE = 'Routing';
@@ -22,8 +23,9 @@ export class Routing {
         this.logger();
     }
 
-    private defineRoutes(): void{
+    private defineRoutes(): void {
         this.app.use('/ussd', ussdRouter);
+        this.app.use('/vehicle', vehicleRouter);
     }
 
     private logger(): void {
