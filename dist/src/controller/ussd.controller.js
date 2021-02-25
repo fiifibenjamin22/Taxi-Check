@@ -33,7 +33,7 @@ class UssdContoller {
         return conversation_helper_1.default.say(message);
     }
     getVehicleInfo(res) {
-        return `Driver: ${res.driver.name}\nStation: ${res.station}\nMunicipal Assembly: ${res.municipal_assembly}`;
+        return `Driver: ${res.driver.name}\nVehicle Make: ${res.make}\nVehicle Type: ${res.type}\nStation: ${res.station}\nMunicipal Assembly: ${res.municipal_assembly}\n`;
     }
     loadDummyData() {
         vehicle_model_1.default.find((err, res) => {
