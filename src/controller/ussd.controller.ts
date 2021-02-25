@@ -48,7 +48,7 @@ export default class UssdContoller {
 
                 let newVehicle = new VehicleModel(
                     {
-                        type: 'Toyota',
+                        make: 'Toyota',
                         model: 'Corolla',
                         chasis_number: '142332421',
                         plate_number: 'WR 6360-12',

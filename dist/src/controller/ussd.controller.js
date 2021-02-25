@@ -39,7 +39,7 @@ class UssdContoller {
         vehicle_model_1.default.find((err, res) => {
             if (!err && res.length <= 0) {
                 let newVehicle = new vehicle_model_1.default({
-                    type: 'Toyota',
+                    make: 'Toyota',
                     model: 'Corolla',
                     chasis_number: '142332421',
                     plate_number: 'WR 6360-12',

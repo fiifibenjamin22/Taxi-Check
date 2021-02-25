@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 let vehicleSchema = new mongoose.Schema(
     {
-        type: String,
+        make: String,
         model: String,
         chasis_number: String,
         plate_number: String,

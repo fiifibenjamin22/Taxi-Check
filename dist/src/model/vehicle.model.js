@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 let vehicleSchema = new mongoose_1.default.Schema({
-    type: String,
+    make: String,
     model: String,
     chasis_number: String,
     plate_number: String,
