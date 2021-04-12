@@ -1,0 +1,39 @@
+{
+  "name": "app-engine",
+  "version": "1.0.0",
+  "description": "Taxi Check app engine to house all services (Monolith)",
+  "scripts": {
+    "start": "node dist/app.js",
+    "dev": "nodemon -x ts-node src/app.ts",
+    "build": "tsc -p ."
+  },
+  "author": "iCode",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.14",
+    "redis": "^3.0.2",
+    "socket.io": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.0",
+    "@types/cors": "^2.8.9",
+    "@types/dotenv": "^8.2.0",
+    "@types/expect": "^24.3.0",
+    "@types/express": "^4.17.11",
+    "@types/mocha": "^8.2.0",
+    "@types/mongoose": "^5.10.3",
+    "@types/node": "^14.14.22",
+    "@types/redis": "^2.8.28",
+    "@types/socket.io": "^2.1.13",
+    "concurrently": "^5.3.0",
+    "expect": "^26.6.2",
+    "mocha": "^8.3.0",
+    "nodemon": "^2.0.7",
+    "rimraf": "^3.0.2",
+    "ts-node": "^9.1.1"
+  }
+}
