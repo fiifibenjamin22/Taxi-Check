@@ -5,7 +5,7 @@
   "scripts": {
     "build": "rimraf ./build && tsc",
     "dev": "nodemon",
-    "start": "npm run build && node ./dist/src/app.js",
+    "start": "nodemon ./dist/src/app.js",
     "prod": "npm run build && npm run start",
     "test": "mocha test/**/*.test.js",
     "test-watch": "nodemon --exec \"npm test\""

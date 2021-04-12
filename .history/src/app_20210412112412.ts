@@ -21,9 +21,7 @@ export default class App {
         this.server.listen(port, async () => {
             try {
                 logging.info(NAMESPACE, `Server listening on: ${settings.SERVER.HOSTNAME}:${port}.`);
-            } catch (e) {
-                logging.info(NAMESPACE, e);
-            }
+            } catch = (e) => logging.info(NAMESPACE, e);
         });
     }
 

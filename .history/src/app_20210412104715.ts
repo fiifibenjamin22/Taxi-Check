@@ -1,10 +1,10 @@
 import express from 'express';
 import logging from './core/logging';
+import config from './core/setup.config';
 import http from 'http';
 import cors from 'cors';
 import { DatabaseConfig } from './data/datasource/database.config';
 import { RoutingConfig } from './domain/routes/common/routing-config.routes';
-import * as settings from './app.settings.json';
 
 const NAMESPACE = 'Server';
 export default class App {
@@ -17,10 +17,9 @@ export default class App {
     }
 
     public start(): void {
-        let port = process.env.PORT || settings.SERVER.PORT;
-        this.server.listen(port, async () => {
+        this.server.listen(config.server.port, async () => {
             try {
-                logging.info(NAMESPACE, `Server listening on: ${settings.SERVER.HOSTNAME}:${port}.`);
+                logging.info(NAMESPACE, `Server listening on: ${config.server.hostname}:${config.server.port}.`);
             } catch (e) {
                 logging.info(NAMESPACE, e);
             }
