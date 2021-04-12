@@ -9,7 +9,7 @@ export class DriverController {
 
         DriverModel.find()
             .then((drivers) => {
-                if (drivers.length > 0) res.status(200).json({ message: 'Drivers fetched', data: drivers })
+                if (drivers) res.status(200).json({ message: 'Drivers fetched', data: drivers })
                 else res.status(404).json({ message: 'No driver found', error: {} })
             })
             .catch((error) => res.status(500).json({ message: 'Error occurred', error: error }));
