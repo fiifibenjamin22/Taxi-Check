@@ -1,0 +1,32 @@
+{
+    "MONGO": {
+        "LOCAL": {
+            "URI": "mongodb://localhost:27017/taxi-check-db",
+            "OPTIONS": {
+                "useUnifiedTopology": true,
+                "useNewUrlParser": true,
+                "socketTimeoutMS": 30000,
+                "keepAlive": true,
+                "poolSize": 50,
+                "autoIndex": false,
+                "retryWrites": false
+            }
+        },
+        "REMOTE": {
+            "URI": "mongodb+srv://root:root@cluster0.rhqxe.mongodb.net/taxi-check-db",
+            "OPTIONS": {
+                "useUnifiedTopology": true,
+                "useNewUrlParser": true,
+                "socketTimeoutMS": 30000,
+                "keepAlive": true,
+                "poolSize": 50,
+                "autoIndex": false,
+                "retryWrites": false
+            }
+        }
+    },
+    "SERVER": {
+        "HOSTNAME": "0.0.0.0",
+        "PORT": 3000
+    }
+}
