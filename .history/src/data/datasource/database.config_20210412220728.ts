@@ -6,7 +6,8 @@ const NAMESPACE = 'Database Config';
 export class DatabaseConfig {
 
     constructor() {
-        let mongoConfig = process.env.NODE_ENV !== 'production' ? settings.MONGO.LOCAL : settings.MONGO.REMOTE;
+
+        let mongoConfig = process.env.NODE_ENV !== 'development' ? settings.MONGO.REMOTE : settings.MONGO.LOCAL;
 
         mongoose.connect(mongoConfig.URI, mongoConfig.OPTIONS)
             .then((_) => logging.info(NAMESPACE, `Connected to mongoDB! ${mongoConfig.URI}`))

@@ -6,6 +6,9 @@ const NAMESPACE = 'Database Config';
 export class DatabaseConfig {
 
     constructor() {
+
+        logging.info(NAMESPACE, `Environment: ${process.env.PORT}`)
+
         let mongoConfig = process.env.NODE_ENV !== 'production' ? settings.MONGO.LOCAL : settings.MONGO.REMOTE;
 
         mongoose.connect(mongoConfig.URI, mongoConfig.OPTIONS)
