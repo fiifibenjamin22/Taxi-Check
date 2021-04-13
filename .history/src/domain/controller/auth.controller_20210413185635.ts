@@ -29,7 +29,7 @@ export class AuthController extends Controller {
         logging.info(NAMESPACE, 'Register user');
 
         try {
-            let response: any = await AuthService.create(user);
+            let response = await AuthService.create(user);
             this.setStatus(201);
             return { message: 'Created', data: response }
         } catch (e) {
