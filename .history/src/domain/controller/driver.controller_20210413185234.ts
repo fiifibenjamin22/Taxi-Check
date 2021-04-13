@@ -29,7 +29,7 @@ export class DriverController extends Controller {
         logging.info(NAMESPACE, 'Create driver');
 
         try {
-            let driver: any = await DriverService.create(newDriver);
+            let driver: any = DriverService.create(newDriver);
             return { 'message': "Created", data: driver };
         } catch (e) {
             this.setStatus(500);
