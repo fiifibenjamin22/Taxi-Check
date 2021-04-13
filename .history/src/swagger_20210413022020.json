@@ -1,0 +1,16 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Taxi Check API",
+        "version": "1.0.0",
+        "license": {
+            "name": "Licensed Under MIT",
+            "url": "https://spdx.org/licenses/MIT.html"
+        },
+        "contact": { "name": "Yours truly", "url": "taxi-check-engine.io" }
+    },
+    "servers": [
+        { "url": "http://0.0.0.0:3000", "description": "Development server" },
+        { "url": "https://taxi-check-engine.herokuapp.com/", "description": "Test server" }
+    ]
+}

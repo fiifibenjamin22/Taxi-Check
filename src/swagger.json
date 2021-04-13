@@ -1,0 +1,301 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"IApiResponse": {
+				"properties": {
+					"message": {
+						"type": "string"
+					},
+					"data": {},
+					"error": {
+						"properties": {
+							"errors": {
+								"items": {},
+								"type": "array"
+							},
+							"message": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"errors",
+							"message"
+						],
+						"type": "object"
+					}
+				},
+				"required": [
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ICredentials": {
+				"properties": {
+					"username": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"username",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_IUser.username-or-password-or-first_name-or-last_name-or-email_": {
+				"properties": {
+					"username": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"first_name": {
+						"type": "string"
+					},
+					"last_name": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"username",
+					"password",
+					"first_name",
+					"last_name",
+					"email"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"NewUserParams": {
+				"$ref": "#/components/schemas/Pick_IUser.username-or-password-or-first_name-or-last_name-or-email_"
+			},
+			"IDriver": {
+				"properties": {
+					"first_name": {
+						"type": "string"
+					},
+					"last_name": {
+						"type": "string"
+					},
+					"other_names": {
+						"type": "string"
+					},
+					"license": {
+						"properties": {
+							"class": {
+								"type": "string"
+							},
+							"number": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"class",
+							"number"
+						],
+						"type": "object"
+					},
+					"address": {
+						"properties": {
+							"ghana_post": {
+								"type": "string"
+							},
+							"residential_address": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"ghana_post",
+							"residential_address"
+						],
+						"type": "object"
+					},
+					"identification": {
+						"properties": {
+							"number": {
+								"type": "string"
+							},
+							"id_type": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"number",
+							"id_type"
+						],
+						"type": "object"
+					},
+					"tin": {
+						"type": "string"
+					},
+					"createdBy": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"first_name",
+					"last_name",
+					"other_names",
+					"license",
+					"address",
+					"identification",
+					"tin",
+					"createdBy"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "app-engine",
+		"version": "1.0.0",
+		"description": "Taxi Check app engine to house all services (Monolith)",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {
+			"name": "iCode"
+		}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/api/auth/login": {
+			"post": {
+				"operationId": "LoginUser",
+				"responses": {
+					"200": {
+						"description": "{message: \"Authorized\", }",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ICredentials"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/auth/register": {
+			"post": {
+				"operationId": "RegisterUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/NewUserParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/driver/all": {
+			"get": {
+				"operationId": "GetAll",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Driver"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/api/driver/create": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Driver"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IDriver"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
