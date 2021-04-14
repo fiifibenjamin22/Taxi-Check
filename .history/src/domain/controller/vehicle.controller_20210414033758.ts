@@ -2,7 +2,7 @@ import { Body, Controller, Get, Path, Post, Route, Tags } from "tsoa";
 import logging from "../../core/logging";
 import { IApiResponse } from "../interfaces/apiresponse.interface";
 import { IVehicle } from "../interfaces/vehicle.interface";
-import  VehicleService  from "../../data/services/vehicle.service";
+import { VehicleService } from "../../data/services/vehicle.service";
 
 const NAMESPACE = 'USER CONTROLLER';
 @Route('/api/vehicle')
@@ -14,7 +14,7 @@ export class VehicleController extends Controller {
         logging.info(NAMESPACE, 'All vehicles');
 
         try {
-            let vehicles: any = await VehicleService.list();
+            let vehicles: any = await VehicleService.getAll();
             return { 'message': "Fetched", data: vehicles };
         } catch (e) {
             this.setStatus(500);
@@ -41,7 +41,7 @@ export class VehicleController extends Controller {
         logging.info(NAMESPACE, 'Find vehicle');
 
         try {
-            let vehicle: any = await VehicleService.readByNumberPlate(numberPlate);
+            let vehicle: any = await VehicleService.findByPlateNumber(numberPlate);
             return { 'message': "Fetched", data: vehicle };
         } catch (e) {
             this.setStatus(500);
@@ -54,7 +54,7 @@ export class VehicleController extends Controller {
         logging.info(NAMESPACE, 'Find vehicle by Id');
 
         try {
-            let vehicle: any = await VehicleService.readById(vehicleId);
+            let vehicle: any = await VehicleService.findById(vehicleId);
             return { 'message': "Fetched", data: vehicle };
         } catch (e) {
             this.setStatus(500);

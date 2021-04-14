@@ -22,8 +22,8 @@ export class AuthController extends Controller {
         }
     }
 
-    @Post('/create')
-    public async createUser(@Body() user: NewUserParams): Promise<IApiResponse> {
+    @Post('/register')
+    public async registerUser(@Body() user: NewUserParams): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Register user');
 
         try {

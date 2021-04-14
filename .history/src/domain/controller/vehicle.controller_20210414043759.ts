@@ -54,7 +54,7 @@ export class VehicleController extends Controller {
         logging.info(NAMESPACE, 'Find vehicle by Id');
 
         try {
-            let vehicle: any = await VehicleService.readById(vehicleId);
+            let vehicle: any = await VehicleService.findById(vehicleId);
             return { 'message': "Fetched", data: vehicle };
         } catch (e) {
             this.setStatus(500);

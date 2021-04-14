@@ -1,13 +1,14 @@
 import logging from "../../core/logging";
 import { Route, Controller, Get, Body, SuccessResponse, Post, Tags } from "tsoa";
 import { ICredentials } from "../interfaces/credentials.interface";
-import AuthService, { NewUserParams } from "../../data/services/auth.service";
+import { AuthService, NewUserParams } from "../../data/services/auth.service";
 import { IApiResponse } from "../interfaces/apiresponse.interface";
 
 const NAMESPACE = 'AUTH CONTROLLER';
 @Route("/api/auth")
 @Tags('Auth')
 export class AuthController extends Controller {
+
     @SuccessResponse("200", "{message: \"Authorized\", }")
     @Post('/login')
     public async loginUser(@Body() credentials: ICredentials): Promise<IApiResponse> {
@@ -22,8 +23,8 @@ export class AuthController extends Controller {
         }
     }
 
-    @Post('/create')
-    public async createUser(@Body() user: NewUserParams): Promise<IApiResponse> {
+    @Post('/register')
+    public async registerUser(@Body() user: NewUserParams): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Register user');
 
         try {

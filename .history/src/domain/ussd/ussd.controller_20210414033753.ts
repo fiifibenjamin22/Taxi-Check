@@ -2,7 +2,7 @@ import express from 'express';
 import { CarPlateHelper } from '../../core/helpers/carplate.helper';
 import { Convo } from '../../core/helpers/conversation.helper';
 import logging from '../../core/logging';
-import VehicleService  from '../../data/services/vehicle.service';
+import { VehicleService } from '../../data/services/vehicle.service';
 
 const NAMESPACE = 'USSD CONTROLLER';
 export class UssdController {
@@ -31,7 +31,7 @@ export class UssdController {
 
                 if (data.length == 1) {
                     if (CarPlateHelper.isValidPlateNumber(command)) {
-                        let vehicle = await VehicleService.readByNumberPlate(plateNumber);
+                        let vehicle = await VehicleService.findByPlateNumber(plateNumber);
 
                         if (vehicle) {
                             response = Convo.say(`DETAILS FOR (${plateNumber})${Convo.divider()}

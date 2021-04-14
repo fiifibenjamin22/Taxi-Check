@@ -250,9 +250,9 @@
 				}
 			}
 		},
-		"/api/auth/register": {
+		"/api/auth/create": {
 			"post": {
-				"operationId": "RegisterUser",
+				"operationId": "CreateUser",
 				"responses": {
 					"200": {
 						"description": "Ok",

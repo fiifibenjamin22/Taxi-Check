@@ -105,8 +105,8 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/api/auth/register',
-            function AuthController_registerUser(request: any, response: any, next: any) {
+        app.post('/api/auth/create',
+            function AuthController_createUser(request: any, response: any, next: any) {
             const args = {
                     user: {"in":"body","name":"user","required":true,"ref":"NewUserParams"},
             };
@@ -123,7 +123,7 @@ export function RegisterRoutes(app: express.Router) {
             const controller = new AuthController();
 
 
-            const promise = controller.registerUser.apply(controller, validatedArgs as any);
+            const promise = controller.createUser.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

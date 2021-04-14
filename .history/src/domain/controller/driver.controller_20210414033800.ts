@@ -1,8 +1,9 @@
 import { Body, Controller, Get, Post, Route, Tags } from "tsoa";
 import logging from "../../core/logging";
+import DriverModel from "../../data/models/driver.model";
 import { IApiResponse } from "../interfaces/apiresponse.interface";
 import { IDriver } from "../interfaces/driver.interface";
-import DriverService from "../../data/services/driver.service";
+import { DriverService } from "../../data/services/driver.service";
 
 const NAMESPACE = 'Driver Controller';
 
@@ -15,7 +16,7 @@ export class DriverController extends Controller {
         logging.info(NAMESPACE, 'Login user');
 
         try {
-            let drivers: any[] = await DriverService.list();
+            let drivers: any[] = await DriverService.getAll();
             return { 'message': "Fetched", data: drivers };
         } catch (e) {
             this.setStatus(500);

@@ -31,7 +31,7 @@ export class UssdController {
 
                 if (data.length == 1) {
                     if (CarPlateHelper.isValidPlateNumber(command)) {
-                        let vehicle = await VehicleService.readByNumberPlate(plateNumber);
+                        let vehicle = await VehicleService.findByPlateNumber(plateNumber);
 
                         if (vehicle) {
                             response = Convo.say(`DETAILS FOR (${plateNumber})${Convo.divider()}
