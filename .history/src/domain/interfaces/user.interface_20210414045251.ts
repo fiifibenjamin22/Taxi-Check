@@ -8,5 +8,5 @@ export interface IUser{
     last_name: string,
     email: string,
     user_group?: "admin" | "municipal-assembly" | "police" | "user",
-    role?: "admin" | "mediator" | "commenter",
+    role?: "municipal-assembly" | "municipal-assembly-admin" | "police" | "police-admin" | "consumer" | "admin",
 }

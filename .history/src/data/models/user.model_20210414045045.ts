@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { IUser } from '../../domain/interfaces/user.interface';
 
 let userSchema = new mongoose.Schema({
     first_name: { type: String, require: 'First name is Required' },
