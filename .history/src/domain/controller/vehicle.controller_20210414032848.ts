@@ -1,5 +1,7 @@
+import { NextFunction } from "express";
 import { Body, Controller, Get, Path, Post, Route, Tags } from "tsoa";
 import logging from "../../core/logging";
+import VehicleModel from "../../data/models/vehicle.model";
 import { IApiResponse } from "../interfaces/api-response.interface";
 import { IVehicle } from "../interfaces/vehicle.interface";
 import { VehicleService } from "../services/vehicle.service";
