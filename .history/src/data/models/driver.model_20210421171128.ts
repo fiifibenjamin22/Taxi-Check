@@ -5,11 +5,7 @@ let driverSchema = new mongoose.Schema({
     last_name: { type: String, require: 'Last name is Required' },
     other_names: { type: String },
     dob: String,
-    gender: {
-        type: String,
-        default: 'male',
-        enum: ["male", "female"]
-    },
+    gender: String,
     license: { number: String, class: String },
     contact: { phone_number: String, email: String },
     address: { residential_address: String, postal_address: String, ghana_post: String },
