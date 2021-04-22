@@ -9,9 +9,9 @@ let vehicleSchema = new mongoose.Schema(
         registration_date: String,
         municipal_assembly: String,
         station: String,
-        owner_id: Schema.Types.ObjectId,
-        drive_id: Schema.Types.ObjectId,
-        created_by: Schema.Types.ObjectId
+        ownerId: Schema.Types.ObjectId,
+        driveId: Schema.Types.ObjectId,
+        createdBy: Schema.Types.ObjectId
     });
 
 const VehicleModel = mongoose.model('vehicles', vehicleSchema);

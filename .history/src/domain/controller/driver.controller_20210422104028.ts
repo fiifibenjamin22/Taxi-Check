@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Route, Tags } from "tsoa";
 import logging from "../../core/logging";
-import { IApiResponse } from "../interfaces/api-response.interface";
+import { IApiResponse } from "../interfaces/apiresponse.interface";
 import { IDriver } from "../interfaces/driver.interface";
 import DriverService from "../../data/services/driver.service";
 

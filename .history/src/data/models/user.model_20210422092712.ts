@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 
 let userSchema = new mongoose.Schema({
     first_name: { type: String, require: 'First name is Required' },

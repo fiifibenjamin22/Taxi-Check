@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
-let vehicleSchema = new mongoose.Schema(
+let terminalMasterSchema = new mongoose.Schema(
     {
         make: String,
         model: String,
@@ -14,6 +14,6 @@ let vehicleSchema = new mongoose.Schema(
         created_by: Schema.Types.ObjectId
     });
 
-const VehicleModel = mongoose.model('vehicles', vehicleSchema);
+const TerminalMasterModel = mongoose.model('terminal_masters', terminalMasterSchema);
 
-export default VehicleModel;
+export default TerminalMasterModel;
