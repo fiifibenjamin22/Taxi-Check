@@ -7,6 +7,8 @@ import { AuthController } from './domain/controller/auth.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { DriverController } from './domain/controller/driver.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { OwnerController } from './domain/controller/owner.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { TerminalMasterController } from './domain/controller/terminal-master.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { TerminalController } from './domain/controller/terminal.controller';
@@ -23,6 +25,7 @@ const models: TsoaRoute.Models = {
             "message": {"dataType":"string","required":true},
             "data": {"dataType":"any"},
             "error": {"dataType":"nestedObjectLiteral","nestedProperties":{"errors":{"dataType":"array","array":{"dataType":"any"},"required":true},"message":{"dataType":"string","required":true}}},
+            "count": {"dataType":"double"},
         },
         "additionalProperties": false,
     },
@@ -55,6 +58,23 @@ const models: TsoaRoute.Models = {
             "dob": {"dataType":"string","required":true},
             "gender": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["male"]},{"dataType":"enum","enums":["female"]}]},
             "license": {"dataType":"nestedObjectLiteral","nestedProperties":{"class":{"dataType":"string","required":true},"number":{"dataType":"string","required":true}},"required":true},
+            "contact": {"dataType":"nestedObjectLiteral","nestedProperties":{"email":{"dataType":"string","required":true},"phone_number":{"dataType":"string","required":true}},"required":true},
+            "address": {"dataType":"nestedObjectLiteral","nestedProperties":{"ghana_post":{"dataType":"string","required":true},"postal_address":{"dataType":"string","required":true},"residential_address":{"dataType":"string","required":true}},"required":true},
+            "identification": {"dataType":"nestedObjectLiteral","nestedProperties":{"number":{"dataType":"string","required":true},"id_type":{"dataType":"string","required":true}},"required":true},
+            "tin": {"dataType":"string","required":true},
+            "created_by": {"dataType":"string"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "IOwner": {
+        "dataType": "refObject",
+        "properties": {
+            "first_name": {"dataType":"string","required":true},
+            "last_name": {"dataType":"string","required":true},
+            "other_names": {"dataType":"string","required":true},
+            "dob": {"dataType":"string","required":true},
+            "gender": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["male"]},{"dataType":"enum","enums":["female"]}]},
             "contact": {"dataType":"nestedObjectLiteral","nestedProperties":{"email":{"dataType":"string","required":true},"phone_number":{"dataType":"string","required":true}},"required":true},
             "address": {"dataType":"nestedObjectLiteral","nestedProperties":{"ghana_post":{"dataType":"string","required":true},"postal_address":{"dataType":"string","required":true},"residential_address":{"dataType":"string","required":true}},"required":true},
             "identification": {"dataType":"nestedObjectLiteral","nestedProperties":{"number":{"dataType":"string","required":true},"id_type":{"dataType":"string","required":true}},"required":true},
@@ -102,10 +122,10 @@ const models: TsoaRoute.Models = {
             "chasis_number": {"dataType":"string","required":true},
             "plate_number": {"dataType":"string","required":true},
             "registration_date": {"dataType":"string","required":true},
-            "municipal_assembly": {"dataType":"string"},
-            "terminal": {"dataType":"string"},
-            "owner": {"dataType":"string"},
-            "driver": {"dataType":"string"},
+            "municipal_assembly": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
+            "terminal": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
+            "owner": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
+            "driver": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
         },
         "additionalProperties": false,
     },
@@ -201,6 +221,49 @@ export function RegisterRoutes(app: express.Router) {
             }
 
             const controller = new DriverController();
+
+
+            const promise = controller.create.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/owner/all',
+            function OwnerController_getAll(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new OwnerController();
+
+
+            const promise = controller.getAll.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/owner/create',
+            function OwnerController_create(request: any, response: any, next: any) {
+            const args = {
+                    newOwner: {"in":"body","name":"newOwner","required":true,"ref":"IOwner"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new OwnerController();
 
 
             const promise = controller.create.apply(controller, validatedArgs as any);

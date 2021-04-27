@@ -27,6 +27,10 @@
 							"message"
 						],
 						"type": "object"
+					},
+					"count": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
@@ -180,6 +184,96 @@
 					"other_names",
 					"dob",
 					"license",
+					"contact",
+					"address",
+					"identification",
+					"tin"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IOwner": {
+				"properties": {
+					"first_name": {
+						"type": "string"
+					},
+					"last_name": {
+						"type": "string"
+					},
+					"other_names": {
+						"type": "string"
+					},
+					"dob": {
+						"type": "string"
+					},
+					"gender": {
+						"type": "string",
+						"enum": [
+							"male",
+							"female"
+						]
+					},
+					"contact": {
+						"properties": {
+							"email": {
+								"type": "string"
+							},
+							"phone_number": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"email",
+							"phone_number"
+						],
+						"type": "object"
+					},
+					"address": {
+						"properties": {
+							"ghana_post": {
+								"type": "string"
+							},
+							"postal_address": {
+								"type": "string"
+							},
+							"residential_address": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"ghana_post",
+							"postal_address",
+							"residential_address"
+						],
+						"type": "object"
+					},
+					"identification": {
+						"properties": {
+							"number": {
+								"type": "string"
+							},
+							"id_type": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"number",
+							"id_type"
+						],
+						"type": "object"
+					},
+					"tin": {
+						"type": "string"
+					},
+					"created_by": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"first_name",
+					"last_name",
+					"other_names",
+					"dob",
 					"contact",
 					"address",
 					"identification",
@@ -354,16 +448,20 @@
 						"type": "string"
 					},
 					"municipal_assembly": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"terminal": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"owner": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"driver": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					}
 				},
 				"required": [
@@ -504,6 +602,60 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/IDriver"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/owner/all": {
+			"get": {
+				"operationId": "GetAll",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Owner"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/api/owner/create": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Owner"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IOwner"
 							}
 						}
 					}

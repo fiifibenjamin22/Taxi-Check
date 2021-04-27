@@ -61,6 +61,7 @@ export class RoutesConfig {
         });
 
         this.app.use(function notFoundHandler(req, res: Response) {
+            logging.info(NAMESPACE, `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}]`);
             res.on('finish', () => {
                 logging.info(NAMESPACE, `METHOD - [${req.method}], URL - [${req.url}], IP - [${req
                     .socket.remoteAddress}], STATUS - [${res.statusCode}]`);

@@ -29,20 +29,8 @@ export class RoutesConfig {
     }
 
     private extraHandler(): void {
-
-        
-        this.app.use(function notFoundHandler(req, res: Response) {
-            logging.info(NAMESPACE, `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}]`);
-            res.status(404).send({ message: new Error(`Not found ${req.url}`) });
-        });
-
-        this.app.use(function errorHandler(
-            err: unknown,
-            req: Request,
-            res: Response,
-            next: NextFunction
-        ): Response | void {
-            logging.info(NAMESPACE, `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}]`);
+        // Handle route not found
+        this.app.use((err: unknown, req, res, next) => {
 
             if (err instanceof ValidateError) {
                 console.warn(`Caught Validation Error for ${req.path}:`, err.fields);
@@ -51,6 +39,7 @@ export class RoutesConfig {
                     details: err?.fields,
                 });
             }
+            
             if (err instanceof Error) {
                 return res.status(500).json({
                     message: "Internal Server Error",
@@ -58,9 +47,14 @@ export class RoutesConfig {
             }
 
             next();
-        });
 
-        this.app.use(function notFoundHandler(req, res: Response) {
+            res.status(404).json({
+                message: new Error(`Not found ${req.url}`)
+            });
+
+            logging.info(NAMESPACE, `METHOD - [${req.method}], URL - [${req.url}], IP - [${req
+                .socket.remoteAddress}]`);
+
             res.on('finish', () => {
                 logging.info(NAMESPACE, `METHOD - [${req.method}], URL - [${req.url}], IP - [${req
                     .socket.remoteAddress}], STATUS - [${res.statusCode}]`);

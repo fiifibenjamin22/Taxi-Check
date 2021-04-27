@@ -4,8 +4,8 @@ export interface IVehicle {
     chasis_number: string,
     plate_number: string,
     registration_date: string,
-    municipal_assembly?: string | null,
-    terminal?: string | null,
-    owner?: string | null,
-    driver?: string | null
+    municipal_assembly?: string,
+    terminal?: string,
+    owner?: string,
+    driver?: string
 }
