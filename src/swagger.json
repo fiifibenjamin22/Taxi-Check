@@ -12,22 +12,6 @@
 						"type": "string"
 					},
 					"data": {},
-					"error": {
-						"properties": {
-							"errors": {
-								"items": {},
-								"type": "array"
-							},
-							"message": {
-								"type": "string"
-							}
-						},
-						"required": [
-							"errors",
-							"message"
-						],
-						"type": "object"
-					},
 					"count": {
 						"type": "number",
 						"format": "double"
@@ -430,6 +414,23 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"IErrorResponse": {
+				"properties": {
+					"message": {
+						"type": "string"
+					},
+					"details": {
+						"properties": {},
+						"additionalProperties": {},
+						"type": "object"
+					}
+				},
+				"required": [
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"IVehicle": {
 				"properties": {
 					"make": {
@@ -448,20 +449,16 @@
 						"type": "string"
 					},
 					"municipal_assembly": {
-						"type": "string",
-						"nullable": true
+						"type": "string"
 					},
 					"terminal": {
-						"type": "string",
-						"nullable": true
+						"type": "string"
 					},
 					"owner": {
-						"type": "string",
-						"nullable": true
+						"type": "string"
 					},
 					"driver": {
-						"type": "string",
-						"nullable": true
+						"type": "string"
 					}
 				},
 				"required": [
@@ -783,25 +780,47 @@
 								}
 							}
 						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
 					}
 				},
 				"tags": [
 					"Vehicle"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/api/vehicle/create": {
 			"post": {
 				"operationId": "Create",
 				"responses": {
-					"200": {
-						"description": "Ok",
+					"201": {
+						"description": "Created"
+					},
+					"422": {
+						"description": "Validation Failed",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/IApiResponse"
+									"$ref": "#/components/schemas/IErrorResponse"
 								}
 							}
 						}

@@ -24,7 +24,6 @@ const models: TsoaRoute.Models = {
         "properties": {
             "message": {"dataType":"string","required":true},
             "data": {"dataType":"any"},
-            "error": {"dataType":"nestedObjectLiteral","nestedProperties":{"errors":{"dataType":"array","array":{"dataType":"any"},"required":true},"message":{"dataType":"string","required":true}}},
             "count": {"dataType":"double"},
         },
         "additionalProperties": false,
@@ -114,6 +113,15 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "IErrorResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "message": {"dataType":"string","required":true},
+            "details": {"dataType":"nestedObjectLiteral","nestedProperties":{},"additionalProperties":{"dataType":"any"}},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "IVehicle": {
         "dataType": "refObject",
         "properties": {
@@ -122,10 +130,10 @@ const models: TsoaRoute.Models = {
             "chasis_number": {"dataType":"string","required":true},
             "plate_number": {"dataType":"string","required":true},
             "registration_date": {"dataType":"string","required":true},
-            "municipal_assembly": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
-            "terminal": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
-            "owner": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
-            "driver": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}]},
+            "municipal_assembly": {"dataType":"string"},
+            "terminal": {"dataType":"string"},
+            "owner": {"dataType":"string"},
+            "driver": {"dataType":"string"},
         },
         "additionalProperties": false,
     },
@@ -359,6 +367,8 @@ export function RegisterRoutes(app: express.Router) {
         app.get('/api/vehicle/all',
             function VehicleController_getAll(request: any, response: any, next: any) {
             const args = {
+                    limit: {"in":"query","name":"limit","dataType":"string"},
+                    notFoundResponse: {"in":"res","name":"404","required":true,"ref":"IErrorResponse"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

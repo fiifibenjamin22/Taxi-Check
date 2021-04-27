@@ -30,7 +30,7 @@ export class VehicleController extends Controller {
         return await VehicleService.create(newVehicle);
     }
 
-    @Get('/findByNumberPlate/{numberPlate}')
+    @Get('/getByNumberPlate/{numberPlate}')
     public async getByNumberPlate(@Path() numberPlate: string, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Find vehicle');
 
@@ -41,7 +41,7 @@ export class VehicleController extends Controller {
         return { 'message': "Fetched", data: vehicle };
     }
 
-    @Get('/findById/{vehicleId}')
+    @Get('/getById/{vehicleId}')
     public async findVehicleById(@Path() vehicleId: string, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Find vehicle by Id');
 

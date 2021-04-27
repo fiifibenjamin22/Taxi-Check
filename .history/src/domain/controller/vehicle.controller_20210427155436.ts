@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Path, Post, Route, Tags, Response, SuccessResponse, Res, TsoaResponse, Query } from "tsoa";
 import logging from "../../core/logging";
-import { IApiResponse, IErrorResponse } from "../interfaces/responses.interface";
+import { IApiResponse, IErrorResponse } from "../interfaces/api-response.interface";
 import { IVehicle } from "../interfaces/vehicle.interface";
 import VehicleService from "../../data/services/vehicle.service";
 
@@ -30,7 +30,7 @@ export class VehicleController extends Controller {
         return await VehicleService.create(newVehicle);
     }
 
-    @Get('/findByNumberPlate/{numberPlate}')
+    @Get('/getByNumberPlate/{numberPlate}')
     public async getByNumberPlate(@Path() numberPlate: string, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Find vehicle');
 
@@ -41,7 +41,7 @@ export class VehicleController extends Controller {
         return { 'message': "Fetched", data: vehicle };
     }
 
-    @Get('/findById/{vehicleId}')
+    @Get('/getById/{vehicleId}')
     public async findVehicleById(@Path() vehicleId: string, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Find vehicle by Id');
 
