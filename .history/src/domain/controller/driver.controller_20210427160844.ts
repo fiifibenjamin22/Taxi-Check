@@ -22,7 +22,7 @@ export class DriverController extends Controller {
     @Response<IErrorResponse>(422, "Validation Failed")
     @SuccessResponse("201", "Created")
     @Post('/create')
-    public async create(@Body() driver: IDriver): Promise<void> {
+    public async create(@Body() driver: IDriver): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Create driver');
 
         this.setStatus(201);

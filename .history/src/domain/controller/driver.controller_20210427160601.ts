@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, Res, Route, SuccessResponse, Response, Tags, TsoaResponse } from "tsoa";
+import { Body, Controller, Get, Post, Query, Res, Route, Tags, TsoaResponse } from "tsoa";
 import logging from "../../core/logging";
 import { IApiResponse, IErrorResponse } from "../interfaces/responses.interface";
 import { IDriver } from "../interfaces/driver.interface";
@@ -19,13 +19,16 @@ export class DriverController extends Controller {
         return { 'message': "Fetched", data: drivers };
     }
 
-    @Response<IErrorResponse>(422, "Validation Failed")
-    @SuccessResponse("201", "Created")
     @Post('/create')
-    public async create(@Body() driver: IDriver): Promise<void> {
+    public async create(@Body() newDriver: IDriver): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Create driver');
 
-        this.setStatus(201);
-        return await DriverService.create(driver);
+        try {
+            let driver: any = await DriverService.create(newDriver);
+            return { 'message': "Created", data: driver };
+        } catch (e) {
+            this.setStatus(500);
+            logging.info(NAMESPACE, "Bad request", e);
+        }
     }
 }
