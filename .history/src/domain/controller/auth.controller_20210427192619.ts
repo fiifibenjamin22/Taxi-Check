@@ -1,7 +1,7 @@
 import logging from "../../core/logging";
 import { Route, Controller, Get, Body, SuccessResponse, Post, Tags, Res, TsoaResponse, Response } from "tsoa";
 import { ICredentials } from "../interfaces/credentials.interface";
-import AuthService from "../../data/services/auth.service";
+import AuthService, { NewUserParams } from "../../data/services/auth.service";
 import { IApiResponse, IErrorResponse } from "../interfaces/responses.interface";
 import { IUser } from "../interfaces/user.interface";
 
