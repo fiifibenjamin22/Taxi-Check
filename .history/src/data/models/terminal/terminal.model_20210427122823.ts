@@ -6,7 +6,7 @@ let terminalSchema = new mongoose.Schema({
     address: { physical_address: String, postal_address: String, ghana_post: String },
     municipal_assembly_id: Schema.Types.ObjectId,
     terminal_master_id: Schema.Types.ObjectId,
-    created_by: Schema.Types.ObjectId
+    created_by: {type: Schema.Types.ObjectId, ref: 'users'},
 });
 
 const TerminalModel = mongoose.model('terminals', terminalSchema);

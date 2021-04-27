@@ -7,6 +7,10 @@ import { AuthController } from './domain/controller/auth.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { DriverController } from './domain/controller/driver.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { TerminalMasterController } from './domain/controller/terminal-master.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { TerminalController } from './domain/controller/terminal.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { VehicleController } from './domain/controller/vehicle.controller';
 import * as express from 'express';
 
@@ -48,11 +52,44 @@ const models: TsoaRoute.Models = {
             "first_name": {"dataType":"string","required":true},
             "last_name": {"dataType":"string","required":true},
             "other_names": {"dataType":"string","required":true},
+            "dob": {"dataType":"string","required":true},
+            "gender": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["male"]},{"dataType":"enum","enums":["female"]}]},
             "license": {"dataType":"nestedObjectLiteral","nestedProperties":{"class":{"dataType":"string","required":true},"number":{"dataType":"string","required":true}},"required":true},
-            "address": {"dataType":"nestedObjectLiteral","nestedProperties":{"ghana_post":{"dataType":"string","required":true},"residential_address":{"dataType":"string","required":true}},"required":true},
+            "contact": {"dataType":"nestedObjectLiteral","nestedProperties":{"email":{"dataType":"string","required":true},"phone_number":{"dataType":"string","required":true}},"required":true},
+            "address": {"dataType":"nestedObjectLiteral","nestedProperties":{"ghana_post":{"dataType":"string","required":true},"postal_address":{"dataType":"string","required":true},"residential_address":{"dataType":"string","required":true}},"required":true},
             "identification": {"dataType":"nestedObjectLiteral","nestedProperties":{"number":{"dataType":"string","required":true},"id_type":{"dataType":"string","required":true}},"required":true},
             "tin": {"dataType":"string","required":true},
-            "createdBy": {"dataType":"string","required":true},
+            "created_by": {"dataType":"string"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ITerminalMaster": {
+        "dataType": "refObject",
+        "properties": {
+            "first_name": {"dataType":"string","required":true},
+            "last_name": {"dataType":"string","required":true},
+            "other_names": {"dataType":"string","required":true},
+            "dob": {"dataType":"string","required":true},
+            "gender": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["male"]},{"dataType":"enum","enums":["female"]}]},
+            "contact": {"dataType":"nestedObjectLiteral","nestedProperties":{"email":{"dataType":"string","required":true},"phone_number":{"dataType":"string","required":true}},"required":true},
+            "address": {"dataType":"nestedObjectLiteral","nestedProperties":{"ghana_post":{"dataType":"string","required":true},"postal_address":{"dataType":"string","required":true},"residential_address":{"dataType":"string","required":true}},"required":true},
+            "identification": {"dataType":"nestedObjectLiteral","nestedProperties":{"number":{"dataType":"string","required":true},"id_type":{"dataType":"string","required":true}},"required":true},
+            "tin": {"dataType":"string","required":true},
+            "created_by": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ITerminal": {
+        "dataType": "refObject",
+        "properties": {
+            "terminal_name": {"dataType":"string","required":true},
+            "contact": {"dataType":"nestedObjectLiteral","nestedProperties":{"email":{"dataType":"string","required":true},"phone_number":{"dataType":"string","required":true}},"required":true},
+            "address": {"dataType":"nestedObjectLiteral","nestedProperties":{"ghana_post":{"dataType":"string","required":true},"postal_address":{"dataType":"string","required":true},"physical_address":{"dataType":"string","required":true}},"required":true},
+            "municipal_assembly": {"dataType":"string"},
+            "terminal_master": {"dataType":"string"},
+            "created_by": {"dataType":"string"},
         },
         "additionalProperties": false,
     },
@@ -65,10 +102,10 @@ const models: TsoaRoute.Models = {
             "chasis_number": {"dataType":"string","required":true},
             "plate_number": {"dataType":"string","required":true},
             "registration_date": {"dataType":"string","required":true},
-            "municipal_assembly": {"dataType":"string","required":true},
-            "station": {"dataType":"string","required":true},
-            "ownerId": {"dataType":"string","required":true},
-            "driverId": {"dataType":"string","required":true},
+            "municipal_assembly": {"dataType":"string"},
+            "terminal": {"dataType":"string"},
+            "owner": {"dataType":"string"},
+            "driver": {"dataType":"string"},
         },
         "additionalProperties": false,
     },
@@ -164,6 +201,92 @@ export function RegisterRoutes(app: express.Router) {
             }
 
             const controller = new DriverController();
+
+
+            const promise = controller.create.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/terminalMaster/all',
+            function TerminalMasterController_getAll(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TerminalMasterController();
+
+
+            const promise = controller.getAll.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/terminalMaster/create',
+            function TerminalMasterController_create(request: any, response: any, next: any) {
+            const args = {
+                    newTerminalMaster: {"in":"body","name":"newTerminalMaster","required":true,"ref":"ITerminalMaster"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TerminalMasterController();
+
+
+            const promise = controller.create.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/terminal/all',
+            function TerminalController_getAll(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TerminalController();
+
+
+            const promise = controller.getAll.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/terminal/create',
+            function TerminalController_create(request: any, response: any, next: any) {
+            const args = {
+                    newTerminal: {"in":"body","name":"newTerminal","required":true,"ref":"ITerminal"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TerminalController();
 
 
             const promise = controller.create.apply(controller, validatedArgs as any);

@@ -27,13 +27,14 @@ export class UssdController {
                 let command = text ?? input;
                 let data: any[] = command.split('*');
                 let plateNumber = data[0];
+                console.log(data);
 
                 if (data.length == 1) {
                     if (CarPlateHelper.isValidPlateNumber(command)) {
                         let vehicle = await VehicleService.readByNumberPlate(plateNumber);
 
                         if (vehicle) {
-                            response = Convo.say(`DETAILS FOR (${plateNumber})${Convo.divider()}Driver: ${vehicle.driver.first_name}\t${vehicle.driver.other_names}\t${vehicle.driver.last_name}\nVehicle: ${vehicle.make}, ${vehicle.model}\nStation: ${vehicle.terminal}\nMunicipal Assembly: ${vehicle.terminal.municipal_assembly.name}`);
+                            response = Convo.say(`DETAILS FOR (${plateNumber})${Convo.divider()}\nDriver: ${vehicle.driver.first_name}\t${vehicle.driver.other_names}\t${vehicle.driver.last_name}\nVehicle: ${vehicle.make}, ${vehicle.model}\nStation: ${vehicle.terminal}\nMunicipal Assembly: ${vehicle.terminal.municipal_assembly.name}`);
                         } else {
                             response = Convo.ask(`UNKNOWN DRIVER${Convo.divider()}1. Report vehicle\n99. Quit`);
                         }

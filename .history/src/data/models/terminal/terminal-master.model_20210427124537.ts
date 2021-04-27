@@ -15,7 +15,7 @@ let terminalMasterSchema = new mongoose.Schema(
         address: { residential_address: String, postal_address: String, ghana_post: String },
         identification: { id_type: String, number: String },
         tin: String,
-        created_by: Schema.Types.ObjectId,
+        created_by: {type: Schema.Types.ObjectId, ref: 'users', default: null},
     });
 
 const TerminalMasterModel = mongoose.model('terminal_masters', terminalMasterSchema);

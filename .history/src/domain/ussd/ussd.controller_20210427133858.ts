@@ -27,6 +27,7 @@ export class UssdController {
                 let command = text ?? input;
                 let data: any[] = command.split('*');
                 let plateNumber = data[0];
+                console.log(data);
 
                 if (data.length == 1) {
                     if (CarPlateHelper.isValidPlateNumber(command)) {

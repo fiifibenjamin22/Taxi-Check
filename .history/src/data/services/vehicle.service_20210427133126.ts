@@ -21,7 +21,6 @@ class VehicleService implements CRUD {
         return await VehicleModel
             .findOne({ plate_number: plateNumber })
             .populate('owner')
-            .populate('terminal')
             .populate('driver')
             .populate('user');
     }

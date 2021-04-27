@@ -20,10 +20,9 @@ class VehicleService implements CRUD {
     public async readByNumberPlate(plateNumber: String): Promise<any> {
         return await VehicleModel
             .findOne({ plate_number: plateNumber })
-            .populate('owner')
-            .populate('terminal')
-            .populate('driver')
-            .populate('user');
+            .populate('owners')
+            .populate('drivers')
+            .populate('users');
     }
 
     public async putById(id: String, vehicle: IVehicle): Promise<any> {

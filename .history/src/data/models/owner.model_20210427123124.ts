@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
-let driverSchema = new mongoose.Schema({
+let ownerSchema = new mongoose.Schema({
     first_name: { type: String, require: 'First name is Required' },
     last_name: { type: String, require: 'Last name is Required' },
     other_names: { type: String },
@@ -10,14 +10,13 @@ let driverSchema = new mongoose.Schema({
         default: 'male',
         enum: ["male", "female"]
     },
-    license: { number: String, class: String },
     contact: { phone_number: String, email: String },
     address: { residential_address: String, postal_address: String, ghana_post: String },
     identification: { id_type: String, number: String },
     tin: { type: String },
-    created_by: { type: Schema.Types.ObjectId, ref: 'users'},
+    created_by: {type: Schema.Types.ObjectId, ref: 'users'},
 });
 
-const DriverModel = mongoose.model('drivers', driverSchema);
+const OwnerModel = mongoose.model('owners', ownerSchema);
 
-export default DriverModel;
+export default OwnerModel;
