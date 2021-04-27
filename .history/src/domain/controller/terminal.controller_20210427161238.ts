@@ -14,19 +14,21 @@ export class TerminalController extends Controller {
         logging.info(NAMESPACE, 'Fetch terminals');
 
         let terminals: any[] = await TerminalService.list();
-        if (!terminals) notFoundResponse(404, { message: "No records found" });
+        if(!terminals) notFoundResponse(404, { message: "No records found" });
 
         return { 'message': "Fetched", data: terminals };
     }
 
-    @Response<IErrorResponse>(422, "Validation Failed")
-    @SuccessResponse("201", "Created")
     @Post('/create')
-    public async create(@Body() terminal: ITerminal): Promise<IApiResponse> {
+    public async create(@Body() newTerminal: ITerminal): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Create terminal');
 
-        this.setStatus(201);
-
-        return await TerminalService.create(terminal);
+        try {
+            let terminal: any = await TerminalService.create(newTerminal);
+            return { 'message': "Created", data: terminal };
+        } catch (e) {
+            this.setStatus(500);
+            logging.info(NAMESPACE, "Bad request", e);
+        }
     }
 }
