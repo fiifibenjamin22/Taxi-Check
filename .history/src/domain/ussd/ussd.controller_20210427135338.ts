@@ -46,7 +46,7 @@ export class UssdController {
                 }
 
             } catch (e) {
-                logging.error(NAMESPACE, e);
+                console.log(e);
                 response = Convo.ask(`WELCOME TO TAXI CHECK${Convo.divider()}Enter car number plate\n(eg. WR 0000-12)`);
             }
         }
