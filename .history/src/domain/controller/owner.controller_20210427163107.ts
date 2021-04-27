@@ -22,8 +22,8 @@ export class OwnerController extends Controller {
     @Response<IErrorResponse>(422, "Validation Failed")
     @SuccessResponse("201", "Created")
     @Post('/create')
-    public async create(@Body() owner: IOwner): Promise<void> {
-        logging.info(NAMESPACE, 'Create new owner');
+    public async create(@Body() owner: IOwner): Promise<IApiResponse> {
+        logging.info(NAMESPACE, 'Create owner');
 
         this.setStatus(201);
 

@@ -1,5 +1,5 @@
 import logging from "../../core/logging";
-import { Route, Controller, Get, Body, SuccessResponse, Post, Tags, Res, TsoaResponse, Response } from "tsoa";
+import { Route, Controller, Get, Body, SuccessResponse, Post, Tags, Res, TsoaResponse } from "tsoa";
 import { ICredentials } from "../interfaces/credentials.interface";
 import AuthService, { NewUserParams } from "../../data/services/auth.service";
 import { IApiResponse, IErrorResponse } from "../interfaces/responses.interface";
@@ -9,7 +9,6 @@ const NAMESPACE = 'AUTH CONTROLLER';
 @Tags('Auth')
 export class AuthController extends Controller {
 
-    @Response<IErrorResponse>(422, "Validation Failed")
     @Post('/login')
     public async loginUser(@Body() credentials: ICredentials, @Res() notAuthorized?: TsoaResponse<401, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Login user');
@@ -20,14 +19,17 @@ export class AuthController extends Controller {
         return { 'message': "Authorized", data: user };
     }
 
-    @Response<IErrorResponse>(422, "Validation Failed")
-    @SuccessResponse("201", "Created")
     @Post('/create')
     public async createUser(@Body() user: NewUserParams): Promise<IApiResponse> {
-        logging.info(NAMESPACE, 'Create new user');
+        logging.info(NAMESPACE, 'Register user');
 
-        this.setStatus(201);
-
-        return await AuthService.create(user);
+        try {
+            let response: any = await AuthService.create(user);
+            this.setStatus(201);
+            return { message: 'Created', data: response }
+        } catch (e) {
+            this.setStatus(500);
+            logging.info(NAMESPACE, "Bad request", e);
+        }
     }
 }

@@ -10,7 +10,7 @@ const NAMESPACE = 'Driver Controller';
 export class DriverController extends Controller {
 
     @Get('/all')
-    public async getAll(@Query() limit?: number, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
+    public async getAll(@Query() limit?: string, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Get all drivers');
 
         let drivers: any[] = await DriverService.list(limit);

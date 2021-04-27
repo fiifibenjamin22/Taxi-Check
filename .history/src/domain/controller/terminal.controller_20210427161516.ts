@@ -23,7 +23,7 @@ export class TerminalController extends Controller {
     @SuccessResponse("201", "Created")
     @Post('/create')
     public async create(@Body() terminal: ITerminal): Promise<IApiResponse> {
-        logging.info(NAMESPACE, 'Create new terminal');
+        logging.info(NAMESPACE, 'Create terminal');
 
         this.setStatus(201);
 
