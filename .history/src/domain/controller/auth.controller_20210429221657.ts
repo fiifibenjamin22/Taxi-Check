@@ -42,7 +42,7 @@ export class AuthController extends Controller {
         return await AuthService.create(user);
     }
 
-    @Delete('/delete/{userId}')
+    @Delete('/delete/{numberPlate}')
     public async delete(@Path() userId: string): Promise<void> {
         logging.info(NAMESPACE, 'delete driver');
 
