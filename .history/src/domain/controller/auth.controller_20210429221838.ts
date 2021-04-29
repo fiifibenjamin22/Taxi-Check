@@ -44,7 +44,7 @@ export class AuthController extends Controller {
 
     @Delete('/delete/{userId}')
     public async delete(@Path() userId: string): Promise<void> {
-        logging.info(NAMESPACE, 'Delete user');
+        logging.info(NAMESPACE, 'delete user');
 
         return await AuthService.deleteById(userId);
     }
