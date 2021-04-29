@@ -23,6 +23,23 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"IErrorResponse": {
+				"properties": {
+					"message": {
+						"type": "string"
+					},
+					"details": {
+						"properties": {},
+						"additionalProperties": {},
+						"type": "object"
+					}
+				},
+				"required": [
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"ICredentials": {
 				"properties": {
 					"username": {
@@ -39,7 +56,7 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"Pick_IUser.username-or-password-or-first_name-or-last_name-or-email_": {
+			"IUser": {
 				"properties": {
 					"username": {
 						"type": "string"
@@ -55,6 +72,26 @@
 					},
 					"email": {
 						"type": "string"
+					},
+					"user_group": {
+						"type": "string",
+						"enum": [
+							"admin",
+							"municipal-assembly",
+							"police",
+							"user"
+						]
+					},
+					"role": {
+						"type": "string",
+						"enum": [
+							"admin",
+							"mediator",
+							"commenter"
+						]
+					},
+					"created_by": {
+						"type": "string"
 					}
 				},
 				"required": [
@@ -62,13 +99,11 @@
 					"password",
 					"first_name",
 					"last_name",
-					"email"
+					"email",
+					"created_by"
 				],
 				"type": "object",
-				"description": "From T, pick a set of properties whose keys are in the union K"
-			},
-			"NewUserParams": {
-				"$ref": "#/components/schemas/Pick_IUser.username-or-password-or-first_name-or-last_name-or-email_"
+				"additionalProperties": false
 			},
 			"IDriver": {
 				"properties": {
@@ -414,23 +449,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"IErrorResponse": {
-				"properties": {
-					"message": {
-						"type": "string"
-					},
-					"details": {
-						"properties": {},
-						"additionalProperties": {},
-						"type": "object"
-					}
-				},
-				"required": [
-					"message"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"IVehicle": {
 				"properties": {
 					"make": {
@@ -487,16 +505,78 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/api/auth/all": {
+			"get": {
+				"operationId": "GetAll",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
 		"/api/auth/login": {
 			"post": {
 				"operationId": "LoginUser",
 				"responses": {
 					"200": {
-						"description": "{message: \"Authorized\", }",
+						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation Failed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
 								}
 							}
 						}
@@ -523,12 +603,22 @@
 			"post": {
 				"operationId": "CreateUser",
 				"responses": {
-					"200": {
-						"description": "Ok",
+					"201": {
+						"description": "Created",
 						"content": {
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation Failed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
 								}
 							}
 						}
@@ -544,7 +634,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/NewUserParams"
+								"$ref": "#/components/schemas/IUser"
 							}
 						}
 					}
@@ -564,25 +654,48 @@
 								}
 							}
 						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
 					}
 				},
 				"tags": [
 					"Driver"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/api/driver/create": {
 			"post": {
 				"operationId": "Create",
 				"responses": {
-					"200": {
-						"description": "Ok",
+					"201": {
+						"description": "Created"
+					},
+					"422": {
+						"description": "Validation Failed",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/IApiResponse"
+									"$ref": "#/components/schemas/IErrorResponse"
 								}
 							}
 						}
@@ -618,25 +731,48 @@
 								}
 							}
 						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
 					}
 				},
 				"tags": [
 					"Owner"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/api/owner/create": {
 			"post": {
 				"operationId": "Create",
 				"responses": {
-					"200": {
-						"description": "Ok",
+					"201": {
+						"description": "Created"
+					},
+					"422": {
+						"description": "Validation Failed",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/IApiResponse"
+									"$ref": "#/components/schemas/IErrorResponse"
 								}
 							}
 						}
@@ -672,25 +808,55 @@
 								}
 							}
 						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
 					}
 				},
 				"tags": [
 					"Terminal Master"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/api/terminalMaster/create": {
 			"post": {
 				"operationId": "Create",
 				"responses": {
-					"200": {
-						"description": "Ok",
+					"201": {
+						"description": "Created",
 						"content": {
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation Failed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
 								}
 							}
 						}
@@ -726,25 +892,55 @@
 								}
 							}
 						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
 					}
 				},
 				"tags": [
 					"Terminal"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/api/terminal/create": {
 			"post": {
 				"operationId": "Create",
 				"responses": {
-					"200": {
-						"description": "Ok",
+					"201": {
+						"description": "Created",
 						"content": {
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation Failed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
 								}
 							}
 						}
@@ -802,7 +998,8 @@
 						"name": "limit",
 						"required": false,
 						"schema": {
-							"type": "string"
+							"format": "double",
+							"type": "number"
 						}
 					}
 				]
@@ -843,7 +1040,7 @@
 				}
 			}
 		},
-		"/api/vehicle/getByNumberPlate/{numberPlate}": {
+		"/api/vehicle/findByNumberPlate/{numberPlate}": {
 			"get": {
 				"operationId": "GetByNumberPlate",
 				"responses": {
@@ -853,6 +1050,16 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
 								}
 							}
 						}
@@ -874,7 +1081,7 @@
 				]
 			}
 		},
-		"/api/vehicle/getById/{vehicleId}": {
+		"/api/vehicle/findById/{vehicleId}": {
 			"get": {
 				"operationId": "FindVehicleById",
 				"responses": {
@@ -884,6 +1091,16 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
 								}
 							}
 						}

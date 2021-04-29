@@ -29,6 +29,15 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "IErrorResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "message": {"dataType":"string","required":true},
+            "details": {"dataType":"nestedObjectLiteral","nestedProperties":{},"additionalProperties":{"dataType":"any"}},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ICredentials": {
         "dataType": "refObject",
         "properties": {
@@ -38,14 +47,19 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Pick_IUser.username-or-password-or-first_name-or-last_name-or-email_": {
-        "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"username":{"dataType":"string","required":true},"password":{"dataType":"string","required":true},"first_name":{"dataType":"string","required":true},"last_name":{"dataType":"string","required":true},"email":{"dataType":"string","required":true}},"validators":{}},
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "NewUserParams": {
-        "dataType": "refAlias",
-        "type": {"ref":"Pick_IUser.username-or-password-or-first_name-or-last_name-or-email_","validators":{}},
+    "IUser": {
+        "dataType": "refObject",
+        "properties": {
+            "username": {"dataType":"string","required":true},
+            "password": {"dataType":"string","required":true},
+            "first_name": {"dataType":"string","required":true},
+            "last_name": {"dataType":"string","required":true},
+            "email": {"dataType":"string","required":true},
+            "user_group": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["admin"]},{"dataType":"enum","enums":["municipal-assembly"]},{"dataType":"enum","enums":["police"]},{"dataType":"enum","enums":["user"]}]},
+            "role": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["admin"]},{"dataType":"enum","enums":["mediator"]},{"dataType":"enum","enums":["commenter"]}]},
+            "created_by": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "IDriver": {
@@ -113,15 +127,6 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "IErrorResponse": {
-        "dataType": "refObject",
-        "properties": {
-            "message": {"dataType":"string","required":true},
-            "details": {"dataType":"nestedObjectLiteral","nestedProperties":{},"additionalProperties":{"dataType":"any"}},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "IVehicle": {
         "dataType": "refObject",
         "properties": {
@@ -148,10 +153,34 @@ export function RegisterRoutes(app: express.Router) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
+        app.get('/api/auth/all',
+            function AuthController_getAll(request: any, response: any, next: any) {
+            const args = {
+                    limit: {"in":"query","name":"limit","dataType":"double"},
+                    notFoundResponse: {"in":"res","name":"404","required":true,"ref":"IErrorResponse"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new AuthController();
+
+
+            const promise = controller.getAll.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/auth/login',
             function AuthController_loginUser(request: any, response: any, next: any) {
             const args = {
                     credentials: {"in":"body","name":"credentials","required":true,"ref":"ICredentials"},
+                    notAuthorized: {"in":"res","name":"401","required":true,"ref":"IErrorResponse"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -173,7 +202,7 @@ export function RegisterRoutes(app: express.Router) {
         app.post('/api/auth/create',
             function AuthController_createUser(request: any, response: any, next: any) {
             const args = {
-                    user: {"in":"body","name":"user","required":true,"ref":"NewUserParams"},
+                    user: {"in":"body","name":"user","required":true,"ref":"IUser"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -195,6 +224,8 @@ export function RegisterRoutes(app: express.Router) {
         app.get('/api/driver/all',
             function DriverController_getAll(request: any, response: any, next: any) {
             const args = {
+                    limit: {"in":"query","name":"limit","dataType":"double"},
+                    notFoundResponse: {"in":"res","name":"404","required":true,"ref":"IErrorResponse"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -216,7 +247,7 @@ export function RegisterRoutes(app: express.Router) {
         app.post('/api/driver/create',
             function DriverController_create(request: any, response: any, next: any) {
             const args = {
-                    newDriver: {"in":"body","name":"newDriver","required":true,"ref":"IDriver"},
+                    driver: {"in":"body","name":"driver","required":true,"ref":"IDriver"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -238,6 +269,8 @@ export function RegisterRoutes(app: express.Router) {
         app.get('/api/owner/all',
             function OwnerController_getAll(request: any, response: any, next: any) {
             const args = {
+                    limit: {"in":"query","name":"limit","dataType":"double"},
+                    notFoundResponse: {"in":"res","name":"404","required":true,"ref":"IErrorResponse"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -259,7 +292,7 @@ export function RegisterRoutes(app: express.Router) {
         app.post('/api/owner/create',
             function OwnerController_create(request: any, response: any, next: any) {
             const args = {
-                    newOwner: {"in":"body","name":"newOwner","required":true,"ref":"IOwner"},
+                    owner: {"in":"body","name":"owner","required":true,"ref":"IOwner"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -281,6 +314,8 @@ export function RegisterRoutes(app: express.Router) {
         app.get('/api/terminalMaster/all',
             function TerminalMasterController_getAll(request: any, response: any, next: any) {
             const args = {
+                    limit: {"in":"query","name":"limit","dataType":"double"},
+                    notFoundResponse: {"in":"res","name":"404","required":true,"ref":"IErrorResponse"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -302,7 +337,7 @@ export function RegisterRoutes(app: express.Router) {
         app.post('/api/terminalMaster/create',
             function TerminalMasterController_create(request: any, response: any, next: any) {
             const args = {
-                    newTerminalMaster: {"in":"body","name":"newTerminalMaster","required":true,"ref":"ITerminalMaster"},
+                    terminalMaster: {"in":"body","name":"terminalMaster","required":true,"ref":"ITerminalMaster"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -324,6 +359,8 @@ export function RegisterRoutes(app: express.Router) {
         app.get('/api/terminal/all',
             function TerminalController_getAll(request: any, response: any, next: any) {
             const args = {
+                    limit: {"in":"query","name":"limit","dataType":"double"},
+                    notFoundResponse: {"in":"res","name":"404","required":true,"ref":"IErrorResponse"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -345,7 +382,7 @@ export function RegisterRoutes(app: express.Router) {
         app.post('/api/terminal/create',
             function TerminalController_create(request: any, response: any, next: any) {
             const args = {
-                    newTerminal: {"in":"body","name":"newTerminal","required":true,"ref":"ITerminal"},
+                    terminal: {"in":"body","name":"terminal","required":true,"ref":"ITerminal"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -367,7 +404,7 @@ export function RegisterRoutes(app: express.Router) {
         app.get('/api/vehicle/all',
             function VehicleController_getAll(request: any, response: any, next: any) {
             const args = {
-                    limit: {"in":"query","name":"limit","dataType":"string"},
+                    limit: {"in":"query","name":"limit","dataType":"double"},
                     notFoundResponse: {"in":"res","name":"404","required":true,"ref":"IErrorResponse"},
             };
 
@@ -409,10 +446,11 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/vehicle/getByNumberPlate/:numberPlate',
+        app.get('/api/vehicle/findByNumberPlate/:numberPlate',
             function VehicleController_getByNumberPlate(request: any, response: any, next: any) {
             const args = {
                     numberPlate: {"in":"path","name":"numberPlate","required":true,"dataType":"string"},
+                    notFoundResponse: {"in":"res","name":"404","required":true,"ref":"IErrorResponse"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -431,10 +469,11 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/api/vehicle/getById/:vehicleId',
+        app.get('/api/vehicle/findById/:vehicleId',
             function VehicleController_findVehicleById(request: any, response: any, next: any) {
             const args = {
                     vehicleId: {"in":"path","name":"vehicleId","required":true,"dataType":"string"},
+                    notFoundResponse: {"in":"res","name":"404","required":true,"ref":"IErrorResponse"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

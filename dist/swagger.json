@@ -1,0 +1,1131 @@
+{
+    "components": {
+        "examples": {},
+        "headers": {},
+        "parameters": {},
+        "requestBodies": {},
+        "responses": {},
+        "schemas": {
+            "IApiResponse": {
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {},
+                    "count": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "IErrorResponse": {
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    },
+                    "details": {
+                        "properties": {},
+                        "additionalProperties": {},
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "ICredentials": {
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "username",
+                    "password"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "IUser": {
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "user_group": {
+                        "type": "string",
+                        "enum": [
+                            "admin",
+                            "municipal-assembly",
+                            "police",
+                            "user"
+                        ]
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "admin",
+                            "mediator",
+                            "commenter"
+                        ]
+                    },
+                    "created_by": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "username",
+                    "password",
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "created_by"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "IDriver": {
+                "properties": {
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "other_names": {
+                        "type": "string"
+                    },
+                    "dob": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string",
+                        "enum": [
+                            "male",
+                            "female"
+                        ]
+                    },
+                    "license": {
+                        "properties": {
+                            "class": {
+                                "type": "string"
+                            },
+                            "number": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "class",
+                            "number"
+                        ],
+                        "type": "object"
+                    },
+                    "contact": {
+                        "properties": {
+                            "email": {
+                                "type": "string"
+                            },
+                            "phone_number": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "email",
+                            "phone_number"
+                        ],
+                        "type": "object"
+                    },
+                    "address": {
+                        "properties": {
+                            "ghana_post": {
+                                "type": "string"
+                            },
+                            "postal_address": {
+                                "type": "string"
+                            },
+                            "residential_address": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "ghana_post",
+                            "postal_address",
+                            "residential_address"
+                        ],
+                        "type": "object"
+                    },
+                    "identification": {
+                        "properties": {
+                            "number": {
+                                "type": "string"
+                            },
+                            "id_type": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "number",
+                            "id_type"
+                        ],
+                        "type": "object"
+                    },
+                    "tin": {
+                        "type": "string"
+                    },
+                    "created_by": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "first_name",
+                    "last_name",
+                    "other_names",
+                    "dob",
+                    "license",
+                    "contact",
+                    "address",
+                    "identification",
+                    "tin"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "IOwner": {
+                "properties": {
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "other_names": {
+                        "type": "string"
+                    },
+                    "dob": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string",
+                        "enum": [
+                            "male",
+                            "female"
+                        ]
+                    },
+                    "contact": {
+                        "properties": {
+                            "email": {
+                                "type": "string"
+                            },
+                            "phone_number": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "email",
+                            "phone_number"
+                        ],
+                        "type": "object"
+                    },
+                    "address": {
+                        "properties": {
+                            "ghana_post": {
+                                "type": "string"
+                            },
+                            "postal_address": {
+                                "type": "string"
+                            },
+                            "residential_address": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "ghana_post",
+                            "postal_address",
+                            "residential_address"
+                        ],
+                        "type": "object"
+                    },
+                    "identification": {
+                        "properties": {
+                            "number": {
+                                "type": "string"
+                            },
+                            "id_type": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "number",
+                            "id_type"
+                        ],
+                        "type": "object"
+                    },
+                    "tin": {
+                        "type": "string"
+                    },
+                    "created_by": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "first_name",
+                    "last_name",
+                    "other_names",
+                    "dob",
+                    "contact",
+                    "address",
+                    "identification",
+                    "tin"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "ITerminalMaster": {
+                "properties": {
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "other_names": {
+                        "type": "string"
+                    },
+                    "dob": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string",
+                        "enum": [
+                            "male",
+                            "female"
+                        ]
+                    },
+                    "contact": {
+                        "properties": {
+                            "email": {
+                                "type": "string"
+                            },
+                            "phone_number": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "email",
+                            "phone_number"
+                        ],
+                        "type": "object"
+                    },
+                    "address": {
+                        "properties": {
+                            "ghana_post": {
+                                "type": "string"
+                            },
+                            "postal_address": {
+                                "type": "string"
+                            },
+                            "residential_address": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "ghana_post",
+                            "postal_address",
+                            "residential_address"
+                        ],
+                        "type": "object"
+                    },
+                    "identification": {
+                        "properties": {
+                            "number": {
+                                "type": "string"
+                            },
+                            "id_type": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "number",
+                            "id_type"
+                        ],
+                        "type": "object"
+                    },
+                    "tin": {
+                        "type": "string"
+                    },
+                    "created_by": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "first_name",
+                    "last_name",
+                    "other_names",
+                    "dob",
+                    "contact",
+                    "address",
+                    "identification",
+                    "tin",
+                    "created_by"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "ITerminal": {
+                "properties": {
+                    "terminal_name": {
+                        "type": "string"
+                    },
+                    "contact": {
+                        "properties": {
+                            "email": {
+                                "type": "string"
+                            },
+                            "phone_number": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "email",
+                            "phone_number"
+                        ],
+                        "type": "object"
+                    },
+                    "address": {
+                        "properties": {
+                            "ghana_post": {
+                                "type": "string"
+                            },
+                            "postal_address": {
+                                "type": "string"
+                            },
+                            "physical_address": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "ghana_post",
+                            "postal_address",
+                            "physical_address"
+                        ],
+                        "type": "object"
+                    },
+                    "municipal_assembly": {
+                        "type": "string"
+                    },
+                    "terminal_master": {
+                        "type": "string"
+                    },
+                    "created_by": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "terminal_name",
+                    "contact",
+                    "address"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "IVehicle": {
+                "properties": {
+                    "make": {
+                        "type": "string"
+                    },
+                    "model": {
+                        "type": "string"
+                    },
+                    "chasis_number": {
+                        "type": "string"
+                    },
+                    "plate_number": {
+                        "type": "string"
+                    },
+                    "registration_date": {
+                        "type": "string"
+                    },
+                    "municipal_assembly": {
+                        "type": "string"
+                    },
+                    "terminal": {
+                        "type": "string"
+                    },
+                    "owner": {
+                        "type": "string"
+                    },
+                    "driver": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "make",
+                    "model",
+                    "chasis_number",
+                    "plate_number",
+                    "registration_date"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            }
+        },
+        "securitySchemes": {}
+    },
+    "info": {
+        "title": "app-engine",
+        "version": "1.0.0",
+        "description": "Taxi Check app engine to house all services (Monolith)",
+        "license": {
+            "name": "ISC"
+        },
+        "contact": {
+            "name": "iCode"
+        }
+    },
+    "openapi": "3.0.0",
+    "paths": {
+        "/api/auth/all": {
+            "get": {
+                "operationId": "GetAll",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IApiResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Auth"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "required": false,
+                        "schema": {
+                            "format": "double",
+                            "type": "number"
+                        }
+                    }
+                ]
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "operationId": "LoginUser",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IApiResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Auth"
+                ],
+                "security": [],
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ICredentials"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/create": {
+            "post": {
+                "operationId": "CreateUser",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IApiResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Auth"
+                ],
+                "security": [],
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/IUser"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/driver/all": {
+            "get": {
+                "operationId": "GetAll",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IApiResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Driver"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "required": false,
+                        "schema": {
+                            "format": "double",
+                            "type": "number"
+                        }
+                    }
+                ]
+            }
+        },
+        "/api/driver/create": {
+            "post": {
+                "operationId": "Create",
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "422": {
+                        "description": "Validation Failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Driver"
+                ],
+                "security": [],
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/IDriver"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/owner/all": {
+            "get": {
+                "operationId": "GetAll",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IApiResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Owner"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "required": false,
+                        "schema": {
+                            "format": "double",
+                            "type": "number"
+                        }
+                    }
+                ]
+            }
+        },
+        "/api/owner/create": {
+            "post": {
+                "operationId": "Create",
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "422": {
+                        "description": "Validation Failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Owner"
+                ],
+                "security": [],
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/IOwner"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/terminalMaster/all": {
+            "get": {
+                "operationId": "GetAll",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IApiResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Terminal Master"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "required": false,
+                        "schema": {
+                            "format": "double",
+                            "type": "number"
+                        }
+                    }
+                ]
+            }
+        },
+        "/api/terminalMaster/create": {
+            "post": {
+                "operationId": "Create",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IApiResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Terminal Master"
+                ],
+                "security": [],
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ITerminalMaster"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/terminal/all": {
+            "get": {
+                "operationId": "GetAll",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IApiResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Terminal"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "required": false,
+                        "schema": {
+                            "format": "double",
+                            "type": "number"
+                        }
+                    }
+                ]
+            }
+        },
+        "/api/terminal/create": {
+            "post": {
+                "operationId": "Create",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IApiResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Terminal"
+                ],
+                "security": [],
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ITerminal"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/vehicle/all": {
+            "get": {
+                "operationId": "GetAll",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IApiResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Vehicle"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "required": false,
+                        "schema": {
+                            "format": "double",
+                            "type": "number"
+                        }
+                    }
+                ]
+            }
+        },
+        "/api/vehicle/create": {
+            "post": {
+                "operationId": "Create",
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "422": {
+                        "description": "Validation Failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Vehicle"
+                ],
+                "security": [],
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/IVehicle"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/vehicle/findByNumberPlate/{numberPlate}": {
+            "get": {
+                "operationId": "GetByNumberPlate",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IApiResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Vehicle"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "numberPlate",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        "/api/vehicle/findById/{vehicleId}": {
+            "get": {
+                "operationId": "FindVehicleById",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IApiResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Vehicle"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "vehicleId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "/"
+        }
+    ]
+}

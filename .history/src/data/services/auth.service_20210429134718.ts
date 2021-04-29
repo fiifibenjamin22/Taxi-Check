@@ -11,7 +11,7 @@ class AuthService implements CRUD {
 
     public async list(limit?: number, page?: number): Promise<any> {
         return await UserModel.find()
-            .select(['-password'])
+            // .select(['-password'])
             .limit(limit)
             .populate('created_by');
     }
