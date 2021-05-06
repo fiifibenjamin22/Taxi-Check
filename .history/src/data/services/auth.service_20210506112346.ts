@@ -64,7 +64,7 @@ class AuthService implements CRUD {
     public async readRoleByGroupId(groupId: string): Promise<any> {
         return await RoleModel.findOne({user_group: groupId})
             .populate('user_group')
-            .populate({path: 'created_by', select: '-password'});
+            .populate({path: 'created_by', select: '-password'})
     }
 }
 
