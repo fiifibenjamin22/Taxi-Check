@@ -13,7 +13,7 @@ export class VehicleController extends Controller {
     public async getAll(@Query() assembly: string, @Query() limit?: number, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'All vehicles');
 
-        let vehicles: any[] = await VehicleService.list(limit, 1, { municipal_assembly: assembly });
+        let vehicles: any[] = await VehicleService.list(assembly, limit);
         if (!vehicles || vehicles.length == 0) notFoundResponse(404, { message: "No record found" });
 
         return { 'message': "Fetched", data: vehicles };
