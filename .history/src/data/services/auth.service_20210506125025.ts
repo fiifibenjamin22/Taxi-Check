@@ -58,13 +58,13 @@ class AuthService implements CRUD {
         return await RoleModel.find()
             .limit(limit)
             .populate('user_group')
-            .populate('created_by');
+            .populate({path: 'created_by', select: 'first_name last_name email user_group -password'});
     }
 
     public async readRoleByGroupId(groupId: string): Promise<any> {
         return await RoleModel.findOne({user_group: groupId})
             .populate('user_group')
-            .populate('created_by');
+            .populate({path: 'created_by', select: 'first_name last_name email user_group -password'});
     }
 }
 
