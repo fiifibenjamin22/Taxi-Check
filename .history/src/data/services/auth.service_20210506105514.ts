@@ -40,7 +40,7 @@ class AuthService implements CRUD {
 
     }
 
-    public async addUserGroup(userGroup: IUserGroup): Promise<any> {
+    public async addUserGroup(userGroup: IUserGroup): Promise<any>{
         return await new UserGroupModel(userGroup).save();
     }
 
@@ -50,21 +50,8 @@ class AuthService implements CRUD {
             .populate('created_by');
     }
 
-    public async addUserRole(role: IRole): Promise<any> {
+    public async addUserRole(role: IRole): Promise<any>{
         return await new RoleModel(role).save();
-    }
-
-    public async listRoles(limit?: number, page?: number): Promise<any> {
-        return await RoleModel.find()
-            .limit(limit)
-            .populate('user_group')
-            .populate('created_by');
-    }
-
-    public async readRoleByGroupId(groupId: string): Promise<any> {
-        return await RoleModel.findOne({user_group: groupId})
-            .populate('user_group')
-            .populate('created_by');
     }
 }
 

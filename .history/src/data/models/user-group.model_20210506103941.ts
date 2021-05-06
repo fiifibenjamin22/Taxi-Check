@@ -1,0 +1,11 @@
+import mongoose, { Schema } from 'mongoose';
+
+let userGroupSchema = new mongoose.Schema({
+    name: { type: String, require: 'Name is Required' },
+    description: { type: String },
+    created_by: { type: Schema.Types.ObjectId, ref: 'users' },
+}, { timestamps: true });
+
+const UserGroupModel = mongoose.model('user_groups', userGroupSchema);
+
+export default UserGroupModel;
