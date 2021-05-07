@@ -40,6 +40,46 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"IAssembly": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"address": {
+						"properties": {
+							"ghana_post": {
+								"type": "string"
+							},
+							"postal_address": {
+								"type": "string"
+							},
+							"physical_address": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"ghana_post",
+							"postal_address",
+							"physical_address"
+						],
+						"type": "object"
+					},
+					"region": {
+						"type": "string"
+					},
+					"created_by": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"address",
+					"region",
+					"created_by"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"ICredentials": {
 				"properties": {
 					"username": {
@@ -58,37 +98,81 @@
 			},
 			"IUser": {
 				"properties": {
-					"username": {
-						"type": "string"
-					},
-					"password": {
-						"type": "string"
-					},
 					"first_name": {
 						"type": "string"
 					},
 					"last_name": {
 						"type": "string"
 					},
-					"email": {
+					"contact": {
+						"properties": {
+							"phone": {
+								"type": "string"
+							},
+							"email": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"phone",
+							"email"
+						],
+						"type": "object"
+					},
+					"address": {
+						"properties": {
+							"physical_address": {
+								"type": "string"
+							},
+							"ghana_post": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"physical_address",
+							"ghana_post"
+						],
+						"type": "object"
+					},
+					"created_by": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"first_name",
+					"last_name",
+					"contact",
+					"address",
+					"created_by"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IAuth": {
+				"properties": {
+					"username": {
 						"type": "string"
 					},
+					"password": {
+						"type": "string"
+					},
+					"confirm_password": {
+						"type": "string"
+					},
+					"requires_password_reset": {
+						"type": "boolean"
+					},
 					"user_group": {
-						"type": "string",
-						"enum": [
-							"admin",
-							"municipal-assembly",
-							"police",
-							"user"
-						]
+						"type": "string"
 					},
 					"role": {
-						"type": "string",
-						"enum": [
-							"admin",
-							"mediator",
-							"commenter"
-						]
+						"type": "string"
+					},
+					"institution_id": {
+						"type": "string"
+					},
+					"user": {
+						"$ref": "#/components/schemas/IUser"
 					},
 					"created_by": {
 						"type": "string"
@@ -97,9 +181,56 @@
 				"required": [
 					"username",
 					"password",
-					"first_name",
-					"last_name",
-					"email",
+					"confirm_password",
+					"requires_password_reset",
+					"user_group",
+					"role",
+					"institution_id",
+					"user",
+					"created_by"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IUserGroup": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"created_by": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"description",
+					"created_by"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IRole": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"user_group": {
+						"type": "string"
+					},
+					"created_by": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"description",
+					"user_group",
 					"created_by"
 				],
 				"type": "object",
@@ -206,7 +337,8 @@
 					"contact",
 					"address",
 					"identification",
-					"tin"
+					"tin",
+					"created_by"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -297,6 +429,26 @@
 					"address",
 					"identification",
 					"tin"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IRegion": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"created_by": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"description",
+					"created_by"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -477,6 +629,9 @@
 					},
 					"driver": {
 						"type": "string"
+					},
+					"created_by": {
+						"type": "string"
 					}
 				},
 				"required": [
@@ -484,7 +639,8 @@
 					"model",
 					"chasis_number",
 					"plate_number",
-					"registration_date"
+					"registration_date",
+					"created_by"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -505,9 +661,152 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/api/assembly/all": {
+			"get": {
+				"operationId": "GetAll",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Assembly"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/assembly/create": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"201": {
+						"description": "Created"
+					},
+					"422": {
+						"description": "Validation Failed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Assembly"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IAssembly"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/assembly/delete/{assemblyId}": {
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Assembly"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "assemblyId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/api/auth/all": {
 			"get": {
 				"operationId": "GetAll",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/auth/all/by/{userGroupId}": {
+			"get": {
+				"operationId": "GetAllByUserGroup",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -634,11 +933,244 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/IUser"
+								"$ref": "#/components/schemas/IAuth"
 							}
 						}
 					}
 				}
+			}
+		},
+		"/api/auth/delete/{userId}": {
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/auth/userGroup/create": {
+			"post": {
+				"operationId": "CreateUserGroup",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation Failed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IUserGroup"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/auth/userGroup/all": {
+			"get": {
+				"operationId": "GetAllUserGroups",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/auth/userRole/create": {
+			"post": {
+				"operationId": "CreateRole",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation Failed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IRole"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/auth/userRole/all": {
+			"get": {
+				"operationId": "GetAllUserRoles",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/auth/userRole/find/by/{groupId}": {
+			"get": {
+				"operationId": "FindRoleByGroupId",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "groupId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/api/driver/all": {
@@ -679,6 +1211,24 @@
 							"format": "double",
 							"type": "number"
 						}
+					},
+					{
+						"in": "query",
+						"name": "fromDate",
+						"required": false,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "toDate",
+						"required": false,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
 					}
 				]
 			}
@@ -716,6 +1266,30 @@
 						}
 					}
 				}
+			}
+		},
+		"/api/driver/delete/{driverId}": {
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Driver"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "driverId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/api/owner/all": {
@@ -793,6 +1367,107 @@
 						}
 					}
 				}
+			}
+		},
+		"/api/region/all": {
+			"get": {
+				"operationId": "GetAll",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Region"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/region/create": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"201": {
+						"description": "Created"
+					},
+					"422": {
+						"description": "Validation Failed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Region"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IRegion"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/region/delete/{regionId}": {
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Region"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "regionId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/api/terminalMaster/all": {
@@ -917,6 +1592,24 @@
 							"format": "double",
 							"type": "number"
 						}
+					},
+					{
+						"in": "query",
+						"name": "fromDate",
+						"required": false,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "toDate",
+						"required": false,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
 					}
 				]
 			}
@@ -995,11 +1688,37 @@
 				"parameters": [
 					{
 						"in": "query",
+						"name": "assembly",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
 						"name": "limit",
 						"required": false,
 						"schema": {
 							"format": "double",
 							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "fromDate",
+						"required": false,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "toDate",
+						"required": false,
+						"schema": {
+							"format": "date-time",
+							"type": "string"
 						}
 					}
 				]

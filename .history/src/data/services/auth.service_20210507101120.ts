@@ -10,10 +10,9 @@ class AuthService implements CRUD {
         return AuthModel.findOne({
             username: credentials.username,
             password: credentials.password,
-        })
-            .select(['-password', '-confirm_password'])
-            .populate({ path: 'user_group', select: '_id, name' })
-            .populate({ path: 'role', select: '_id, name' })
+        }, { select: ['-password'] })
+            .populate('user_group')
+            .populate('role')
             .populate({ path: 'user', select: '-password' });
     }
 
@@ -26,7 +25,9 @@ class AuthService implements CRUD {
 
     public async create(auth: IAuth): Promise<any> {
         var user = await new UserModel(auth.user).save();
-        auth.user = user._id;
+
+        let id = user._id;
+        auth.user = id;
         return await new AuthModel(auth).save();
     }
 

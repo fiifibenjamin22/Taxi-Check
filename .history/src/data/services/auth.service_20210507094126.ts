@@ -4,17 +4,19 @@ import { IUser } from "../../domain/interfaces/user.interface";
 import { CRUD } from "../../core/helpers/crud.interface";
 import { IAuth } from "../../domain/interfaces/auth.interface";
 import AuthModel from "../models/auth.model";
+import logging from "../../core/logging";
+
 class AuthService implements CRUD {
 
     public async authorize(credentials: ICredentials): Promise<any> {
-        return AuthModel.findOne({
-            username: credentials.username,
-            password: credentials.password,
+        return await AuthModel.findOne({ 
+            username: credentials.username, 
+            password: credentials.password, 
         })
-            .select(['-password', '-confirm_password'])
-            .populate({ path: 'user_group', select: '_id, name' })
-            .populate({ path: 'role', select: '_id, name' })
-            .populate({ path: 'user', select: '-password' });
+        .populate('user_group')
+        .populate('role')
+        .populate('user')
+        .populate({path: 'created_by', select: '-password'});
     }
 
     public async list(limit?: number, page?: number): Promise<any> {
@@ -25,8 +27,12 @@ class AuthService implements CRUD {
     }
 
     public async create(auth: IAuth): Promise<any> {
-        var user = await new UserModel(auth.user).save();
-        auth.user = user._id;
+
+        let newUser = await new UserModel(auth.user).save();
+        logging.info("Auth Service", `${newUser}`);
+        let id = newUser._id;
+        auth.user = id;
+
         return await new AuthModel(auth).save();
     }
 
@@ -39,7 +45,7 @@ class AuthService implements CRUD {
     }
 
     public async readByUserGroupId(groupId: string): Promise<any> {
-        return await UserModel.find({ user_group: groupId });
+        return await UserModel.find({user_group: groupId});
     }
 
     public async deleteById(id: string): Promise<any> {
