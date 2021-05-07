@@ -5,6 +5,7 @@ import AuthService from "../../data/services/auth.service";
 import { IUser } from "../interfaces/user.interface";
 import { IUserGroup } from "../interfaces/user-group.interface";
 import { IRole } from "../interfaces/role.interface";
+import RoleModel from "../../data/models/role.model";
 import { IErrorResponse, IApiResponse } from "../../core/helpers/responses.interface";
 
 const NAMESPACE = 'AUTH CONTROLLER';

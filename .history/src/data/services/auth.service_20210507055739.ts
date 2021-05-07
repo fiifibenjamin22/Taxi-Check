@@ -1,7 +1,7 @@
 import UserModel from "../models/user.model";
 import { ICredentials } from "../../domain/interfaces/credentials.interface";
 import { IUser } from "../../domain/interfaces/user.interface";
-import { CRUD } from "../../core/helpers/crud.interface";
+import { CRUD } from "../../domain/interfaces/crud.interface";
 import { IUserGroup } from "../../domain/interfaces/user-group.interface";
 import UserGroupModel from "../models/user-group.model";
 import { IRole } from "../../domain/interfaces/role.interface";
