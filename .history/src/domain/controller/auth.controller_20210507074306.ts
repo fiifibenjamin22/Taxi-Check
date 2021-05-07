@@ -55,7 +55,7 @@ export class AuthController extends Controller {
 
     @Response<IErrorResponse>(422, "Validation Failed")
     @SuccessResponse("201", "Created")
-    @Post('/userGroup/create')
+    @Post('/create/userGroup')
     public async createUserGroup(@Body() userGroup: IUserGroup): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Create new user group');
 
@@ -64,7 +64,7 @@ export class AuthController extends Controller {
         return await UserGroupService.create(userGroup);
     }
 
-    @Get('/userGroup/all')
+    @Get('/all/userGroups')
     public async getAllUserGroups(@Query() limit?: number, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Get all user groups');
 
@@ -76,7 +76,7 @@ export class AuthController extends Controller {
 
     @Response<IErrorResponse>(422, "Validation Failed")
     @SuccessResponse("201", "Created")
-    @Post('/userRole/create')
+    @Post('/create/userRole')
     public async createRole(@Body() role: IRole): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Create new user role');
 
@@ -85,7 +85,7 @@ export class AuthController extends Controller {
         return await AuthService.addUserRole(role);
     }
 
-    @Get('/userRole/all')
+    @Get('/all/userRoles')
     public async getAllUserRoles(@Query() limit?: number, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Get all user roles');
 
@@ -95,7 +95,7 @@ export class AuthController extends Controller {
         return { 'message': "Fetched", data: userRoles };
     }
 
-    @Get('/userRole/find/by/{groupId}')
+    @Get('/find/roleByGroupId/{groupId}')
     public async findRoleByGroupId(@Path() groupId: string, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Find role by group Id');
 
