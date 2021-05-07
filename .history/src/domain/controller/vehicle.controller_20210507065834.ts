@@ -13,20 +13,12 @@ export class VehicleController extends Controller {
     public async getAll(
         @Query() assembly: string, 
         @Query() limit?: number, 
-        @Query() fromDate?: Date,
-        @Query() toDate?: Date,
+        @Query() fromDate?: String,
+        @Query() toDate?: String,
         @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'All vehicles');
 
-        var extraQuery = { municipal_assembly: assembly };
-        if(fromDate != null && toDate != null){
-            extraQuery['createdAt'] ={
-                $gte: fromDate,
-                $lte: toDate
-            }
-        }
-
-        let vehicles: any[] = await VehicleService.list(limit, 1, extraQuery);
+        let vehicles: any[] = await VehicleService.list(limit, 1, { municipal_assembly: assembly });
         if (!vehicles || vehicles.length == 0) notFoundResponse(404, { message: "No record found" });
 
         return { 'message': "Fetched", data: vehicles };
