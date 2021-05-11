@@ -53,7 +53,7 @@ export class DriverController extends Controller {
 
     @Get('/find/by/{driverId}')
     public async findDriverById(@Path() terminalId: string, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
-        logging.info(NAMESPACE, 'Find driver by Id');
+        logging.info(NAMESPACE, 'Find terminal by Id');
 
         let driver: any = await DriverService.readById(terminalId);
         if (!driver) notFoundResponse(404, { message: "No record found" });
