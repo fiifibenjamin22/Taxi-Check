@@ -12,6 +12,7 @@ export class DriverController extends Controller {
     @Get('/all')
     public async getAll(
         @Query() assembly?: string,
+        @Query() licenseNumber?: string,
         @Query() limit?: number,
         @Query() fromDate?: Date,
         @Query() toDate?: Date,
@@ -20,6 +21,7 @@ export class DriverController extends Controller {
 
         let extraQuery ={};
         if(assembly != assembly) extraQuery = { municipal_assembly: assembly };
+        if(licenseNumber) extraQuery = {license_number: licenseNumber};
         
         if (fromDate != null && toDate != null) {
             extraQuery['createdAt'] = {

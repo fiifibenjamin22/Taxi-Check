@@ -11,7 +11,8 @@ export class DriverController extends Controller {
 
     @Get('/all')
     public async getAll(
-        @Query() assembly: string,
+        @Query() assembly?: string,
+        @Query() licenseNumber?: string,
         @Query() limit?: number,
         @Query() fromDate?: Date,
         @Query() toDate?: Date,
@@ -20,6 +21,7 @@ export class DriverController extends Controller {
 
         let extraQuery ={};
         if(assembly != assembly) extraQuery = { municipal_assembly: assembly };
+        if(licenseNumber) extraQuery = {license_number: licenseNumber};
         
         if (fromDate != null && toDate != null) {
             extraQuery['createdAt'] = {
@@ -49,5 +51,14 @@ export class DriverController extends Controller {
         logging.info(NAMESPACE, 'Delete driver');
 
         return await DriverService.deleteById(driverId);
+    }
+
+    @Get('/find/by/{driverId}')
+    public async findDriverById(@Path() driverId: string, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
+        logging.info(NAMESPACE, 'Find driver by Id');
+
+        let driver: any = await DriverService.readById(driverId);
+        if (!driver) notFoundResponse(404, { message: "No record found" });
+        return { 'message': "Fetched", data: driver };
     }
 }
