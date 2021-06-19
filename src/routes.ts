@@ -124,6 +124,7 @@ const models: TsoaRoute.Models = {
             "address": {"dataType":"nestedObjectLiteral","nestedProperties":{"ghana_post":{"dataType":"string","required":true},"postal_address":{"dataType":"string","required":true},"residential_address":{"dataType":"string","required":true}},"required":true},
             "identification": {"dataType":"nestedObjectLiteral","nestedProperties":{"number":{"dataType":"string","required":true},"id_type":{"dataType":"string","required":true}},"required":true},
             "tin": {"dataType":"string","required":true},
+            "municipal_assembly": {"dataType":"string"},
             "created_by": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
@@ -509,6 +510,7 @@ export function RegisterRoutes(app: express.Router) {
         app.get('/api/driver/all',
             function DriverController_getAll(request: any, response: any, next: any) {
             const args = {
+                    assembly: {"in":"query","name":"assembly","dataType":"string"},
                     limit: {"in":"query","name":"limit","dataType":"double"},
                     fromDate: {"in":"query","name":"fromDate","dataType":"datetime"},
                     toDate: {"in":"query","name":"toDate","dataType":"datetime"},
@@ -528,6 +530,31 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.getAll.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/driver/search',
+            function DriverController_search(request: any, response: any, next: any) {
+            const args = {
+                    assembly: {"in":"query","name":"assembly","dataType":"string"},
+                    filter: {"in":"query","name":"filter","dataType":"string"},
+                    limit: {"in":"query","name":"limit","dataType":"double"},
+                    notFoundResponse: {"in":"res","name":"404","required":true,"ref":"IErrorResponse"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new DriverController();
+
+
+            const promise = controller.search.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -572,6 +599,29 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.delete.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/driver/find/by/:driverId',
+            function DriverController_findDriverById(request: any, response: any, next: any) {
+            const args = {
+                    driverId: {"in":"path","name":"driverId","required":true,"dataType":"string"},
+                    notFoundResponse: {"in":"res","name":"404","required":true,"ref":"IErrorResponse"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new DriverController();
+
+
+            const promise = controller.findDriverById.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -735,6 +785,7 @@ export function RegisterRoutes(app: express.Router) {
         app.get('/api/terminal/all',
             function TerminalController_getAll(request: any, response: any, next: any) {
             const args = {
+                    assembly: {"in":"query","name":"assembly","dataType":"string"},
                     limit: {"in":"query","name":"limit","dataType":"double"},
                     fromDate: {"in":"query","name":"fromDate","dataType":"datetime"},
                     toDate: {"in":"query","name":"toDate","dataType":"datetime"},
@@ -779,10 +830,33 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/terminal/find/by/:terminalId',
+            function TerminalController_findTerminalById(request: any, response: any, next: any) {
+            const args = {
+                    terminalId: {"in":"path","name":"terminalId","required":true,"dataType":"string"},
+                    notFoundResponse: {"in":"res","name":"404","required":true,"ref":"IErrorResponse"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TerminalController();
+
+
+            const promise = controller.findTerminalById.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/vehicle/all',
             function VehicleController_getAll(request: any, response: any, next: any) {
             const args = {
-                    assembly: {"in":"query","name":"assembly","required":true,"dataType":"string"},
+                    assembly: {"in":"query","name":"assembly","dataType":"string"},
                     limit: {"in":"query","name":"limit","dataType":"double"},
                     fromDate: {"in":"query","name":"fromDate","dataType":"datetime"},
                     toDate: {"in":"query","name":"toDate","dataType":"datetime"},

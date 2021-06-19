@@ -8,6 +8,27 @@ class DriverService implements CRUD {
         return await DriverModel.find(extras).limit(limit);
     }
 
+    public async search(assembly: string, query?: string, limit?: number): Promise<any[]> {
+        return await DriverModel
+            .find(
+                {
+                    $and: [
+                        { municipal_assembly: assembly },
+                        {
+                            $or: [
+                                {first_name: query},
+                                {last_name: query},
+                                {other_names: query},
+                                {'license.number': query},
+                                {tin: query},
+                            ]
+                        }
+                    ]
+                }
+            )
+            .limit(limit);
+    }
+
     public async create(driver: IDriver): Promise<any> {
         return await new DriverModel(driver).save();
     }

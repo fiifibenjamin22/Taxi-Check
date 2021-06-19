@@ -10,33 +10,20 @@ class DriverService implements CRUD {
 
     public async search(assembly: string, query?: string, limit?: number): Promise<any[]> {
         return await DriverModel
-        .find(
-            {
-                $or: [
-                    {first_name: query},
-                    {last_name: query},
-                    {other_names: query},
-                    {'license.number': query},
-                    {tin: query},
-                ]
-            }
-        )
-            // .find(
-            //     {
-            //         $and: [
-            //             { municipal_assembly: assembly },
-            //             {
-            //                 $or: [
-            //                     {first_name: query},
-            //                     {last_name: query},
-            //                     {other_names: query},
-            //                     {'license.number': query},
-            //                     {tin: query},
-            //                 ]
-            //             }
-            //         ]
-            //     }
-            // )
+            .find(
+                {
+                    $and: [
+                        { municipal_assembly: assembly },
+                        {
+                            $or: [
+                                {first_name: query},
+                                {last_name: query},
+                                {other_names: query},
+                            ]
+                        }
+                    ]
+                }
+            )
             .limit(limit);
     }
 

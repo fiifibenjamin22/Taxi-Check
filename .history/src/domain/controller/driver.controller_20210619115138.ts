@@ -30,7 +30,7 @@ export class DriverController extends Controller {
 
         console.log(extraQuery);
 
-        let drivers: any[] = await DriverService.list(limit, 1, extraQuery);
+        let drivers: any[] = await DriverService.list(limit, 50, extraQuery);
         if (!drivers || drivers.length == 0) notFoundResponse(404, { message: "No records found" });
 
         return { 'message': "Fetched", data: drivers };
@@ -39,12 +39,14 @@ export class DriverController extends Controller {
     @Get('/search')
     public async search(
         @Query() assembly?: string,
-        @Query() filter?: string,
         @Query() limit?: number,
         @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
-        logging.info(NAMESPACE, 'Search from all drivers');
+        logging.info(NAMESPACE, 'Get all drivers');
 
-        let drivers: any[] = await DriverService.search(assembly, filter, limit);
+        let extraQuery ={};
+        if(assembly != null) extraQuery = { municipal_assembly: assembly };
+
+        let drivers: any[] = await DriverService.list(limit, 50, extraQuery);
         if (!drivers || drivers.length == 0) notFoundResponse(404, { message: "No records found" });
 
         return { 'message': "Fetched", data: drivers };

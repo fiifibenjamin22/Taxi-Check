@@ -38,13 +38,13 @@ export class DriverController extends Controller {
 
     @Get('/search')
     public async search(
-        @Query() assembly?: string,
+        @Query() assembly: string,
         @Query() filter?: string,
         @Query() limit?: number,
         @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Search from all drivers');
 
-        let drivers: any[] = await DriverService.search(assembly, filter, limit);
+        let drivers: any[] = await DriverService.list( assembly, filter, limit);
         if (!drivers || drivers.length == 0) notFoundResponse(404, { message: "No records found" });
 
         return { 'message': "Fetched", data: drivers };

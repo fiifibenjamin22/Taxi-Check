@@ -1,11 +1,17 @@
 import DriverModel from "../models/driver.model";
 import { IDriver } from "../../domain/interfaces/driver.interface";
-import { CRUD } from "../../domain/interfaces/crud.interface";
+import { CRUD } from "../../core/helpers/crud.interface";
 
 class DriverService implements CRUD {
 
-    public async list(limit?: number, page?: number): Promise<any[]> {
-        return await DriverModel.find();
+    public async list(limit?: number, page?: number, extras?: Object): Promise<any[]> {
+        return await DriverModel.find(extras).limit(limit);
+    }
+
+    public async search(assembly: string, query?: string, limit?: number): Promise<any[]> {
+        return await DriverModel
+                .find({municipal_assembly: assembly})
+                .limit(limit);
     }
 
     public async create(driver: IDriver): Promise<any> {

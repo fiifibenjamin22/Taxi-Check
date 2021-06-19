@@ -38,7 +38,7 @@ export class DriverController extends Controller {
 
     @Get('/search')
     public async search(
-        @Query() assembly?: string,
+        @Query() assembly: string,
         @Query() filter?: string,
         @Query() limit?: number,
         @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {

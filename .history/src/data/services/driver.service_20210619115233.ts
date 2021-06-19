@@ -4,8 +4,12 @@ import { CRUD } from "../../core/helpers/crud.interface";
 
 class DriverService implements CRUD {
 
-    public async list(limit?: number, page?: number): Promise<any[]> {
-        return await DriverModel.find().limit(limit);
+    public async list(limit?: number, page?: number, extras?: Object): Promise<any[]> {
+        return await DriverModel.find(extras).limit(limit);
+    }
+
+    public async search(limit?: number, page?: number, query?: String): Promise<any[]> {
+        return await DriverModel.find(query).limit(limit);
     }
 
     public async create(driver: IDriver): Promise<any> {

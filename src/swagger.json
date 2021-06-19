@@ -324,6 +324,9 @@
 					"tin": {
 						"type": "string"
 					},
+					"municipal_assembly": {
+						"type": "string"
+					},
 					"created_by": {
 						"type": "string"
 					}
@@ -1205,6 +1208,14 @@
 				"parameters": [
 					{
 						"in": "query",
+						"name": "assembly",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
 						"name": "limit",
 						"required": false,
 						"schema": {
@@ -1228,6 +1239,64 @@
 						"schema": {
 							"format": "date-time",
 							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/driver/search": {
+			"get": {
+				"operationId": "Search",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Driver"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "assembly",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "filter",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
 						}
 					}
 				]
@@ -1274,6 +1343,47 @@
 				"responses": {
 					"204": {
 						"description": "No content"
+					}
+				},
+				"tags": [
+					"Driver"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "driverId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/driver/find/by/{driverId}": {
+			"get": {
+				"operationId": "FindDriverById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
 					}
 				},
 				"tags": [
@@ -1586,6 +1696,14 @@
 				"parameters": [
 					{
 						"in": "query",
+						"name": "assembly",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
 						"name": "limit",
 						"required": false,
 						"schema": {
@@ -1656,6 +1774,47 @@
 				}
 			}
 		},
+		"/api/terminal/find/by/{terminalId}": {
+			"get": {
+				"operationId": "FindTerminalById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Terminal"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "terminalId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/api/vehicle/all": {
 			"get": {
 				"operationId": "GetAll",
@@ -1689,7 +1848,7 @@
 					{
 						"in": "query",
 						"name": "assembly",
-						"required": true,
+						"required": false,
 						"schema": {
 							"type": "string"
 						}
