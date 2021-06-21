@@ -15,13 +15,12 @@ export class DriverController extends Controller {
         @Query() limit?: number,
         @Query() fromDate?: Date,
         @Query() toDate?: Date,
-        @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>,
-    ): Promise<IApiResponse> {
+        @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Get all drivers');
 
-        let extraQuery = {};
-        if (assembly != null) extraQuery = { municipal_assembly: assembly };
-
+        let extraQuery ={};
+        if(assembly != null) extraQuery = { municipal_assembly: assembly };
+        
         if (fromDate != null && toDate != null) {
             extraQuery['createdAt'] = {
                 $gte: fromDate,
