@@ -1,11 +1,14 @@
-import { CRUD } from "../../domain/interfaces/crud.interface";
+import { CRUD } from "../../core/helpers/crud.interface";
 import { ITerminal } from "../../domain/interfaces/terminal.interface";
 import TerminalModel from "../models/terminal.model";
 
 class TerminalService implements CRUD {
 
-    public async list(limit?: number, page?: number): Promise<any[]> {
-        return await TerminalModel.find().limit(limit);
+    public async list(limit?: number, page?: number, extra?: Object): Promise<any[]> {
+        return await TerminalModel.find(extra)
+            .populate('municipal_assembly')
+            .populate('terminal_master')
+            .limit(limit);
     }
 
     public async create(terminal: ITerminal): Promise<any> {

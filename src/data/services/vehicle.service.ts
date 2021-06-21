@@ -6,7 +6,13 @@ import { Convo } from "../../core/helpers/conversation.helper";
 class VehicleService implements CRUD {
 
     public async list(limit?: number, page?: number, extra?: Object): Promise<any[]> {
-        return await VehicleModel.find(extra).limit(limit);
+        return await VehicleModel
+        .find(extra)
+        .populate('municipal_assembly')
+        .populate('terminal')
+        .populate('owner')
+        .populate('driver')
+        .limit(limit);
     }
 
     public async create(vehicle: IVehicle): Promise<any> {

@@ -1,30 +1,54 @@
+import VehicleModel from "../models/vehicle.model";
+import { IVehicle } from "../../domain/interfaces/vehicle.interface";
+import { CRUD } from "../../core/helpers/crud.interface";
 import { Convo } from "../../core/helpers/conversation.helper";
-import VehicleModel from "../../data/models/vehicle.model";
-import { IVehicle } from "../interfaces/vehicle.interface";
 
-export class VehicleService {
-    public static async getAll(): Promise<any[]> {
-        return await VehicleModel.find();
+class VehicleService implements CRUD {
+
+    public async list(limit?: number, page?: number, extra?: Object): Promise<any[]> {
+        return await VehicleModel
+        .find(extra)
+        .populate('municipal_assembly')
+        .populate('terminal')
+        .populate('owner')
+        .populate('driver')
+        .limit(limit);
     }
 
-    public static async findByPlateNumber(plateNumber: String): Promise<any> {
-        return await VehicleModel.findOne({ plate_number: plateNumber });
-    }
-
-    public static async findById(id: String): Promise<any> {
-        return await VehicleModel.findById(id);
-    }
-
-    public static async create(vehicle: IVehicle): Promise<any> {
+    public async create(vehicle: IVehicle): Promise<any> {
         return await new VehicleModel(vehicle).save();
     }
 
-    public static reportVehicle(plateNumber: string): string {
+    public async readById(id: String): Promise<any> {
+        return await VehicleModel.findById(id);
+    }
+
+    public async readByNumberPlate(plateNumber: String): Promise<any> {
+        return await VehicleModel
+            .findOne({ plate_number: plateNumber })
+            .populate('owner')
+            .populate('terminal')
+            .populate('driver')
+            .populate({path: 'user', select: '-password'});
+    }
+
+    public async putById(id: String, vehicle: IVehicle): Promise<any> {
+        return await VehicleModel.updateOne({ _id: id }, vehicle);
+    }
+
+    public async deleteById(id: String): Promise<any> {
+        return await VehicleModel.deleteOne({ _id: id });
+    }
+
+    public async patchById(id: String, vehicle: IVehicle): Promise<any> {
+
+    }
+
+    public reportVehicle(plateNumber: string): string {
         return `VEHICLE REPORTED${Convo.divider()}Vehicle with plate number ${plateNumber} reported. Thank you!`;
     }
 
-    public static async preload(): Promise<void> {
-
+    public async preload(): Promise<void> {
         VehicleModel.find((err, res) => {
             if (!err && res.length <= 0) {
 
@@ -75,3 +99,5 @@ export class VehicleService {
         });
     }
 }
+
+export default new VehicleService();
