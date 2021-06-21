@@ -70,6 +70,13 @@ export class DriverController extends Controller {
         return await DriverService.putById(driverId, driver);
     }
 
+    @Delete('/delete/{driverId}')
+    public async delete(@Path() driverId: string): Promise<void> {
+        logging.info(NAMESPACE, 'Delete driver');
+
+        return await DriverService.deleteById(driverId);
+    }
+
     @Get('/find/by/{driverId}')
     public async findDriverById(@Path() driverId: string, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Find driver by Id');
@@ -77,12 +84,5 @@ export class DriverController extends Controller {
         let driver: any = await DriverService.readById(driverId);
         if (!driver) notFoundResponse(404, { message: "No record found" });
         return { 'message': "Fetched", data: driver };
-    }
-
-    @Delete('/delete/{driverId}')
-    public async delete(@Path() driverId: string): Promise<void> {
-        logging.info(NAMESPACE, 'Delete driver');
-
-        return await DriverService.deleteById(driverId);
     }
 }

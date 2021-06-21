@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, Res, Route, SuccessResponse, Response, Tags, TsoaResponse, Path } from "tsoa";
+import { Body, Controller, Get, Post, Query, Res, Route, SuccessResponse, Response, Tags, TsoaResponse, Path, Delete, Put } from "tsoa";
 import logging from "../../core/logging";
 import { ITerminal } from "../interfaces/terminal.interface";
 import TerminalService from "../../data/services/terminal.service";
@@ -45,6 +45,17 @@ export class TerminalController extends Controller {
         return await TerminalService.create(terminal);
     }
 
+    @Response<IErrorResponse>(422, "Validation Failed")
+    @SuccessResponse("200", "Updated")
+    @Put('/update/{terminalId}')
+    public async update(@Path() terminalId: string, @Body() terminal: ITerminal): Promise<void> {
+        logging.info(NAMESPACE, 'Update terminal');
+
+        this.setStatus(200);
+        return await TerminalService.putById(terminalId, terminal);
+    }
+
+
     @Get('/find/by/{terminalId}')
     public async findTerminalById(@Path() terminalId: string, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Find terminal by Id');
@@ -52,5 +63,13 @@ export class TerminalController extends Controller {
         let terminal: any = await TerminalService.readById(terminalId);
         if (!terminal) notFoundResponse(404, { message: "No record found" });
         return { 'message': "Fetched", data: terminal };
+    }
+
+
+    @Delete('/delete/{terminalId}')
+    public async delete(@Path() terminalId: string): Promise<void> {
+        logging.info(NAMESPACE, 'Delete terminal');
+
+        return await TerminalService.deleteById(terminalId);
     }
 }

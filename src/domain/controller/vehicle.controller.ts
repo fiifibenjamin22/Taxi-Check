@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Path, Post, Route, Tags, Response, SuccessResponse, Res, TsoaResponse, Query } from "tsoa";
+import { Body, Controller, Get, Path, Post, Route, Tags, Response, SuccessResponse, Res, TsoaResponse, Query, Put, Delete } from "tsoa";
 import logging from "../../core/logging";
 import { IVehicle } from "../interfaces/vehicle.interface";
 import VehicleService from "../../data/services/vehicle.service";
@@ -44,6 +44,16 @@ export class VehicleController extends Controller {
         return await VehicleService.create(newVehicle);
     }
 
+    @Response<IErrorResponse>(422, "Validation Failed")
+    @SuccessResponse("200", "Updated")
+    @Put('/update/{vehicleId}')
+    public async update(@Path() vehicleId: string, @Body() vehicle: IVehicle): Promise<void> {
+        logging.info(NAMESPACE, 'Update vehicle');
+
+        this.setStatus(200);
+        return await VehicleService.putById(vehicleId, vehicle);
+    }
+
     @Get('/findByNumberPlate/{numberPlate}')
     public async getByNumberPlate(@Path() numberPlate: string, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Find vehicle');
@@ -64,5 +74,12 @@ export class VehicleController extends Controller {
         if (!vehicle) notFoundResponse(404, { message: "No record found" });
 
         return { 'message': "Fetched", data: vehicle };
+    }
+
+    @Delete('/delete/{vehicleId}')
+    public async delete(@Path() vehicleId: string): Promise<void> {
+        logging.info(NAMESPACE, 'Delete driver');
+
+        return await VehicleService.deleteById(vehicleId);
     }
 }
