@@ -4,9 +4,10 @@ let terminalSchema = new mongoose.Schema({
     terminal_name: { type: String, require: 'First name is Required' },
     contact: { phone_number: String, email: String },
     address: { physical_address: String, postal_address: String, ghana_post: String },
-    terminal_master_id: Schema.Types.ObjectId,
-    created_by: Schema.Types.ObjectId
-});
+    municipal_assembly: { type: Schema.Types.ObjectId, ref: 'assemblies'},
+    terminal_master: { type: Schema.Types.ObjectId, ref: 'terminal_masters' },
+    created_by: { type: Schema.Types.ObjectId, ref: 'users' },
+}, { timestamps: true });
 
 const TerminalModel = mongoose.model('terminals', terminalSchema);
 

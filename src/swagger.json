@@ -1337,12 +1337,22 @@
 				}
 			}
 		},
-		"/api/driver/delete/{driverId}": {
-			"delete": {
-				"operationId": "Delete",
+		"/api/driver/update/{driverId}": {
+			"put": {
+				"operationId": "Update",
 				"responses": {
-					"204": {
-						"description": "No content"
+					"200": {
+						"description": "Updated"
+					},
+					"422": {
+						"description": "Validation Failed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
 					}
 				},
 				"tags": [
@@ -1358,7 +1368,17 @@
 							"type": "string"
 						}
 					}
-				]
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IDriver"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/api/driver/find/by/{driverId}": {
@@ -1384,6 +1404,30 @@
 								}
 							}
 						}
+					}
+				},
+				"tags": [
+					"Driver"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "driverId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/driver/delete/{driverId}": {
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"204": {
+						"description": "No content"
 					}
 				},
 				"tags": [
@@ -1774,6 +1818,50 @@
 				}
 			}
 		},
+		"/api/terminal/update/{terminalId}": {
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Updated"
+					},
+					"422": {
+						"description": "Validation Failed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Terminal"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "terminalId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ITerminal"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/api/terminal/find/by/{terminalId}": {
 			"get": {
 				"operationId": "FindTerminalById",
@@ -1797,6 +1885,30 @@
 								}
 							}
 						}
+					}
+				},
+				"tags": [
+					"Terminal"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "terminalId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/terminal/delete/{terminalId}": {
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"204": {
+						"description": "No content"
 					}
 				},
 				"tags": [
@@ -1918,6 +2030,50 @@
 				}
 			}
 		},
+		"/api/vehicle/update/{vehicleId}": {
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Updated"
+					},
+					"422": {
+						"description": "Validation Failed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vehicle"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "vehicleId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IVehicle"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/api/vehicle/findByNumberPlate/{numberPlate}": {
 			"get": {
 				"operationId": "GetByNumberPlate",
@@ -1982,6 +2138,30 @@
 								}
 							}
 						}
+					}
+				},
+				"tags": [
+					"Vehicle"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "vehicleId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/vehicle/delete/{vehicleId}": {
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"204": {
+						"description": "No content"
 					}
 				},
 				"tags": [

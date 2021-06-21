@@ -18,25 +18,21 @@ export class VehicleController extends Controller {
         @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>,
     ): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'All vehicles');
-        try {
 
-            let extraQuery = {};
-            if (assembly != null) extraQuery = { municipal_assembly: assembly };
+        let extraQuery = {};
+        if (assembly != null) extraQuery = { municipal_assembly: assembly };
 
-            if (fromDate != null && toDate != null) {
-                extraQuery['createdAt'] = {
-                    $gte: fromDate,
-                    $lte: toDate
-                }
+        if (fromDate != null && toDate != null) {
+            extraQuery['createdAt'] = {
+                $gte: fromDate,
+                $lte: toDate
             }
-
-            let vehicles: any[] = await VehicleService.list(limit, 1, extraQuery);
-            if (!vehicles || vehicles.length == 0) return notFoundResponse(404, { message: "No record found" });
-
-            return { 'message': "Fetched", data: vehicles };
-        } catch(e){
-            logging.error(NAMESPACE, e);
         }
+
+        let vehicles: any[] = await VehicleService.list(limit, 1, extraQuery);
+        if (!vehicles || vehicles.length == 0) notFoundResponse(404, { message: "No record found" });
+
+        return { 'message': "Fetched", data: vehicles };
     }
 
     @Response<IErrorResponse>(422, "Validation Failed")
