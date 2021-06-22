@@ -64,6 +64,7 @@ export class TerminalController extends Controller {
         return { 'message': "Fetched", data: terminal };
     }
 
+
     @Delete('/delete/{terminalId}')
     public async delete(@Path() terminalId: string): Promise<void> {
         logging.info(NAMESPACE, 'Delete terminal');
