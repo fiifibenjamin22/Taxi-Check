@@ -26,7 +26,7 @@ export default class App {
                 logging.info(NAMESPACE, e);
             }
         });
-        // SMSHelper.sendSMS();
+        SMSHelper.sendSMS();
     }
 
     private config(): void {

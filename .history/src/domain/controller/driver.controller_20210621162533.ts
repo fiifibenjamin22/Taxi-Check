@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Query, Res, Route, SuccessResponse, Response, Tags, TsoaResponse, Delete, Path, Put } from "tsoa";
-import logging from "../../core/utils/logging";
+import logging from "../../core/logging";
 import { IDriver } from "../interfaces/driver.interface";
 import DriverService from "../../data/services/driver.service";
 import { IApiResponse, IErrorResponse } from "../../core/helpers/responses.interface";

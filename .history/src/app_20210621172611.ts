@@ -5,7 +5,6 @@ import cors from 'cors';
 import { DatabaseConfig } from './data/datasource/database.config';
 import * as settings from './app.settings.json';
 import { RoutesConfig } from './core/utils/routes.config';
-import SMSHelper  from './core/helpers/sms.helper';
 
 const NAMESPACE = 'Server';
 export default class App {
@@ -26,7 +25,6 @@ export default class App {
                 logging.info(NAMESPACE, e);
             }
         });
-        // SMSHelper.sendSMS();
     }
 
     private config(): void {

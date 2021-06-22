@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, Res, Route, SuccessResponse, Response, Tags, TsoaResponse, Delete, Path, Put } from "tsoa";
+import { Body, Controller, Get, Post, Query, Res, Route, SuccessResponse, Response, Tags, TsoaResponse } from "tsoa";
 import { IErrorResponse, IApiResponse } from "../../core/helpers/responses.interface";
 import logging from "../../core/utils/logging";
 import TerminalMasterService from "../../data/services/terminal-master.service";
@@ -10,10 +10,7 @@ const NAMESPACE = 'Terminal Master Controller';
 export class TerminalMasterController extends Controller {
 
     @Get('/all')
-    public async getAll(
-        @Query() limit?: number,
-        @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>,
-    ): Promise<IApiResponse> {
+    public async getAll(@Query() limit?: number, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Fetch terminal masters');
 
         let terminalMasters: any[] = await TerminalMasterService.list(limit);
@@ -31,22 +28,5 @@ export class TerminalMasterController extends Controller {
         this.setStatus(201);
 
         return await TerminalMasterService.create(terminalMaster);
-    }
-
-    @Response<IErrorResponse>(422, "Validation Failed")
-    @SuccessResponse("200", "Updated")
-    @Put('/update/{terminalId}')
-    public async update(@Path() terminalId: string, @Body() terminalMaster: ITerminalMaster): Promise<void> {
-        logging.info(NAMESPACE, 'Update terminal master');
-
-        this.setStatus(200);
-        return await TerminalMasterService.putById(terminalId, terminalMaster);
-    }
-
-    @Delete('/delete/{terminalMasterId}')
-    public async delete(@Path() terminalMasterId: string): Promise<void> {
-        logging.info(NAMESPACE, 'Delete terminal master');
-
-        return await TerminalMasterService.deleteById(terminalMasterId);
     }
 }

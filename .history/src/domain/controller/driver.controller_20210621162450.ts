@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Query, Res, Route, SuccessResponse, Response, Tags, TsoaResponse, Delete, Path, Put } from "tsoa";
-import logging from "../../core/utils/logging";
+import logging from "../../core/logging";
 import { IDriver } from "../interfaces/driver.interface";
 import DriverService from "../../data/services/driver.service";
 import { IApiResponse, IErrorResponse } from "../../core/helpers/responses.interface";
@@ -65,10 +65,7 @@ export class DriverController extends Controller {
     }
 
     @Get('/find/by/{driverId}')
-    public async findDriverById(
-        @Path() driverId: string, 
-        @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>,
-    ): Promise<IApiResponse> {
+    public async findDriverById(@Path() driverId: string, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Find driver by Id');
 
         let driver: any = await DriverService.readById(driverId);
