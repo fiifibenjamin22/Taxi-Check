@@ -6,30 +6,29 @@ class DriverService implements CRUD {
 
     public async list(limit?: number, page?: number, extras?: Object): Promise<any[]> {
         return await DriverModel
-            .find(extras)
-            .populate('terminal')
-            .limit(limit);
+        .find(extras)
+        .populate('terminal')
+        .limit(limit);
     }
 
     public async search(assembly: string, query?: string, limit?: number): Promise<any[]> {
         return await DriverModel
-            .find({ $text: { $search: query } })
-            // .find(
-            //     {
-            //         $and: [
-            //             { municipal_assembly: assembly },
-            //             {
-            //                 $or: [
-            //                     { first_name: query },
-            //                     { last_name: query },
-            //                     { other_names: query },
-            //                     { 'license.number': query },
-            //                     { tin: query },
-            //                 ]
-            //             }
-            //         ]
-            //     }
-            // )
+            .find(
+                {
+                    $and: [
+                        { municipal_assembly: assembly },
+                        {
+                            $or: [
+                                { first_name: query },
+                                { last_name: query },
+                                { other_names: query },
+                                { 'license.number': query },
+                                { tin: query },
+                            ]
+                        }
+                    ]
+                }
+            )
             .populate('terminal')
             .limit(limit);
     }

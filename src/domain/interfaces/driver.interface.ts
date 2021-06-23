@@ -1,7 +1,7 @@
 export interface IDriver {
     first_name: string,
     last_name: string,
-    other_names: string,
+    other_names?: string,
     dob: string,
     gender?: "male" | "female",
     license: { number: string, class: string },
