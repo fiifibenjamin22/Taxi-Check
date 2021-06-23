@@ -15,8 +15,9 @@ let driverSchema = new mongoose.Schema({
     address: { residential_address: String, postal_address: String, ghana_post: String },
     identification: { id_type: String, number: String },
     tin: { type: String },
-    created_by: {type: Schema.Types.ObjectId, ref: 'users', default: ''},
-});
+    terminal: { type: Schema.Types.ObjectId, ref: 'terminals'},
+    created_by: { type: Schema.Types.ObjectId, ref: 'users'},
+}, { timestamps: true });
 
 const DriverModel = mongoose.model('drivers', driverSchema);
 
