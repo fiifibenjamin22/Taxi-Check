@@ -116,7 +116,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "first_name": {"dataType":"string","required":true},
             "last_name": {"dataType":"string","required":true},
-            "other_names": {"dataType":"string","required":true},
+            "other_names": {"dataType":"string"},
             "dob": {"dataType":"string","required":true},
             "gender": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["male"]},{"dataType":"enum","enums":["female"]}]},
             "license": {"dataType":"nestedObjectLiteral","nestedProperties":{"class":{"dataType":"string","required":true},"number":{"dataType":"string","required":true}},"required":true},
@@ -135,7 +135,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "first_name": {"dataType":"string","required":true},
             "last_name": {"dataType":"string","required":true},
-            "other_names": {"dataType":"string","required":true},
+            "other_names": {"dataType":"string"},
             "dob": {"dataType":"string","required":true},
             "gender": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["male"]},{"dataType":"enum","enums":["female"]}]},
             "contact": {"dataType":"nestedObjectLiteral","nestedProperties":{"email":{"dataType":"string","required":true},"phone_number":{"dataType":"string","required":true}},"required":true},
@@ -510,7 +510,6 @@ export function RegisterRoutes(app: express.Router) {
         app.get('/api/driver/all',
             function DriverController_getAll(request: any, response: any, next: any) {
             const args = {
-                    assembly: {"in":"query","name":"assembly","dataType":"string"},
                     limit: {"in":"query","name":"limit","dataType":"double"},
                     fromDate: {"in":"query","name":"fromDate","dataType":"datetime"},
                     toDate: {"in":"query","name":"toDate","dataType":"datetime"},
@@ -536,7 +535,6 @@ export function RegisterRoutes(app: express.Router) {
         app.get('/api/driver/search',
             function DriverController_search(request: any, response: any, next: any) {
             const args = {
-                    assembly: {"in":"query","name":"assembly","dataType":"string"},
                     filter: {"in":"query","name":"filter","dataType":"string"},
                     limit: {"in":"query","name":"limit","dataType":"double"},
                     notFoundResponse: {"in":"res","name":"404","required":true,"ref":"IErrorResponse"},
@@ -802,6 +800,51 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.create.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.put('/api/terminalMaster/update/:terminalId',
+            function TerminalMasterController_update(request: any, response: any, next: any) {
+            const args = {
+                    terminalId: {"in":"path","name":"terminalId","required":true,"dataType":"string"},
+                    terminalMaster: {"in":"body","name":"terminalMaster","required":true,"ref":"ITerminalMaster"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TerminalMasterController();
+
+
+            const promise = controller.update.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/api/terminalMaster/delete/:terminalMasterId',
+            function TerminalMasterController_delete(request: any, response: any, next: any) {
+            const args = {
+                    terminalMasterId: {"in":"path","name":"terminalMasterId","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new TerminalMasterController();
+
+
+            const promise = controller.delete.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

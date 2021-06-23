@@ -11,7 +11,7 @@ class DriverService implements CRUD {
             .limit(limit);
     }
 
-    public async search(query?: string, limit?: number): Promise<any[]> {
+    public async search(assembly: string, query?: string, limit?: number): Promise<any[]> {
         try {
             return await DriverModel
                 .find({ $text: { $search: query } })

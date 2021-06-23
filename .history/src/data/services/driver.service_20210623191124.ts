@@ -12,14 +12,10 @@ class DriverService implements CRUD {
     }
 
     public async search(query?: string, limit?: number): Promise<any[]> {
-        try {
-            return await DriverModel
-                .find({ $text: { $search: query } })
-                .populate('terminal')
-                .limit(limit);
-        } catch (e) {
-            console.log(e);
-        }
+        return await DriverModel
+            .find({ $text: { $search: query } })
+            .populate('terminal')
+            .limit(limit);
     }
 
     public async create(driver: IDriver): Promise<any> {

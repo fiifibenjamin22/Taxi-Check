@@ -22,6 +22,7 @@ let driverSchema = new mongoose.Schema({
 driverSchema.index({first_name: 'text', last_name: 'text', other_names: 'text', 'license.number': 'text'});
 
 const DriverModel = mongoose.model('drivers', driverSchema);
+
 DriverModel.createIndexes();
 
 export default DriverModel;

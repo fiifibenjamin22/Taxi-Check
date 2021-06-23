@@ -11,15 +11,11 @@ class DriverService implements CRUD {
             .limit(limit);
     }
 
-    public async search(query?: string, limit?: number): Promise<any[]> {
-        try {
-            return await DriverModel
-                .find({ $text: { $search: query } })
-                .populate('terminal')
-                .limit(limit);
-        } catch (e) {
-            console.log(e);
-        }
+    public async search(assembly: string, query?: string, limit?: number): Promise<any[]> {
+        return await DriverModel
+            .find({ $and: [{ municipal_assembly: assembly }, { $text: { $search: query } }] })
+            .populate('terminal')
+            .limit(limit);
     }
 
     public async create(driver: IDriver): Promise<any> {
