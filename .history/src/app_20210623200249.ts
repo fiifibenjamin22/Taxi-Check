@@ -26,7 +26,7 @@ export default class App {
                 logging.info(NAMESPACE, e);
             }
         });
-        // SMSHelper.sendSMS('+233241852603', 'Hello there');
+        SMSHelper.sendSMS('+233241852603', 'Hello there');
     }
 
     private config(): void {
