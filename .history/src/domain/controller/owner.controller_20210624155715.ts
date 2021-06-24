@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, Res, Route, SuccessResponse, Response, Tags, TsoaResponse, Path, Put, Delete } from "tsoa";
+import { Body, Controller, Get, Post, Query, Res, Route, SuccessResponse, Response, Tags, TsoaResponse, Path, Put } from "tsoa";
 import logging from "../../core/utils/logging";
 import OwnerService from "../../data/services/owner.service";
 import { IErrorResponse, IApiResponse } from "../interfaces/common/responses.interface";
@@ -15,20 +15,6 @@ export class OwnerController extends Controller {
         logging.info(NAMESPACE, 'Get owners');
 
         let owners: any[] = await OwnerService.list(limit);
-        if (!owners || owners.length == 0) notFoundResponse(404, { message: "No records found" });
-
-        return { 'message': "Fetched", data: owners };
-    }
-
-    @Get('/search')
-    public async search(
-        @Query() filter?: string,
-        @Query() limit?: number,
-        @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>,
-    ): Promise<IApiResponse> {
-        logging.info(NAMESPACE, 'Search from all owners');
-
-        let owners: any[] = await OwnerService.search(filter, limit);
         if (!owners || owners.length == 0) notFoundResponse(404, { message: "No records found" });
 
         return { 'message': "Fetched", data: owners };
@@ -53,12 +39,5 @@ export class OwnerController extends Controller {
 
         this.setStatus(200);
         return await OwnerService.putById(ownerId, owner);
-    }
-
-    @Delete('/delete/{driverId}')
-    public async delete(@Path() ownerId: string): Promise<void> {
-        logging.info(NAMESPACE, 'Delete owner');
-
-        return await OwnerService.deleteById(ownerId);
     }
 }

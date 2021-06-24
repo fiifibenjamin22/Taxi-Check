@@ -17,6 +17,9 @@ let ownerSchema = new mongoose.Schema({
     created_by: { type: Schema.Types.ObjectId, ref: 'users' },
 }, { timestamps: true });
 
+ownerSchema.index({first_name: 'text', last_name: 'text', other_names: 'text', 'identification.number': 'text'});
+
 const OwnerModel = mongoose.model('owners', ownerSchema);
+OwnerModel.createIndexes();
 
 export default OwnerModel;

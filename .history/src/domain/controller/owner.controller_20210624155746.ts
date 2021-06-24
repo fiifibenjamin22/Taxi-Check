@@ -20,20 +20,6 @@ export class OwnerController extends Controller {
         return { 'message': "Fetched", data: owners };
     }
 
-    @Get('/search')
-    public async search(
-        @Query() filter?: string,
-        @Query() limit?: number,
-        @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>,
-    ): Promise<IApiResponse> {
-        logging.info(NAMESPACE, 'Search from all owners');
-
-        let owners: any[] = await OwnerService.search(filter, limit);
-        if (!owners || owners.length == 0) notFoundResponse(404, { message: "No records found" });
-
-        return { 'message': "Fetched", data: owners };
-    }
-
     @Response<IErrorResponse>(422, "Validation Failed")
     @SuccessResponse("201", "Created")
     @Post('/create')
