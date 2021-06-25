@@ -38,7 +38,7 @@ class AuthService implements CRUD {
     public async phoneAuth(phoneVerification: PhoneVerification): Promise<any> {
         let phoneAuth: IPhoneAuth = <IPhoneAuth>{ phone: phoneVerification.phone, status: 'PENDING' };
 
-        return await PhoneAuthModel.findOneAndUpdate({phone: phoneAuth.phone}, phoneAuth, {upsert: true});
+        return await PhoneAuthModel.findByIdAndUpdate({phone: phoneAuth.phone}, phoneAuth, {upsert: true});
     }
 
     public async confirmOTP(otpConfirmation: OTPConfirmation): Promise<any> {
@@ -48,7 +48,7 @@ class AuthService implements CRUD {
             status: 'CONFIRMED'
         };
 
-        return await PhoneAuthModel.findOneAndUpdate({phone: phoneAuth.phone}, phoneAuth);
+        return await new PhoneAuthModel(phoneAuth).save();
     }
 
     public async readByPhone(phone: string): Promise<any> {

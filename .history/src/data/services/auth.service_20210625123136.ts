@@ -7,7 +7,6 @@ import AuthModel from "../models/auth.model";
 import { IPhoneAuth } from "../../domain/interfaces/phone-auth.interface";
 import PhoneAuthModel from "../models/phone-auth.model";
 
-export type PhoneVerification = Pick<IPhoneAuth, "phone">;
 export type OTPConfirmation = Pick<IPhoneAuth, "phone" | "otp">;
 class AuthService implements CRUD {
 
@@ -35,24 +34,27 @@ class AuthService implements CRUD {
             .populate({ path: 'user', select: '-password' });
     }
 
-    public async phoneAuth(phoneVerification: PhoneVerification): Promise<any> {
-        let phoneAuth: IPhoneAuth = <IPhoneAuth>{ phone: phoneVerification.phone, status: 'PENDING' };
+    public async phoneAuth(phone: String): Promise<any>{
+        let phoneAuth: IPhoneAuth = <IPhoneAuth>{
+            phone,
+            status: 'PENDING'
+        };
 
-        return await PhoneAuthModel.findOneAndUpdate({phone: phoneAuth.phone}, phoneAuth, {upsert: true});
+        return await new PhoneAuthModel(phoneAuth).save();
     }
 
-    public async confirmOTP(otpConfirmation: OTPConfirmation): Promise<any> {
+    public async confirmOTP(otpConfirmation: OTPConfirmation): Promise<any>{
         let phoneAuth: IPhoneAuth = <IPhoneAuth>{
             phone: otpConfirmation.phone,
             otp: otpConfirmation.otp,
             status: 'CONFIRMED'
         };
 
-        return await PhoneAuthModel.findOneAndUpdate({phone: phoneAuth.phone}, phoneAuth);
+        return await new PhoneAuthModel(phoneAuth).save();
     }
 
-    public async readByPhone(phone: string): Promise<any> {
-        return await PhoneAuthModel.findOne({ phone });
+    public async readByPhone(phone: string): Promise<any>{
+        return await PhoneAuthModel.findOne({phone});
     }
 
     public async putById(id: string, user: IUser): Promise<any> {

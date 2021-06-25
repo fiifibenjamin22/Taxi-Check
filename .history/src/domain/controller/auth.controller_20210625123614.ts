@@ -1,7 +1,7 @@
 import logging from "../../core/utils/logging";
 import { Route, Controller, Get, Body, SuccessResponse, Post, Tags, Res, TsoaResponse, Response, Query, Delete, Path } from "tsoa";
 import { ICredentials } from "../interfaces/credentials.interface";
-import AuthService, { OTPConfirmation, PhoneVerification } from "../../data/services/auth.service";
+import AuthService, { PhoneVerification } from "../../data/services/auth.service";
 import { IUser } from "../interfaces/user.interface";
 import { IUserGroup } from "../interfaces/user-group.interface";
 import { IRole } from "../interfaces/role.interface";
@@ -47,19 +47,13 @@ export class AuthController extends Controller {
     }
 
     @Response<IErrorResponse>(422, "Validation Failed")
+    @SuccessResponse("201", "Created")
     @Post('/phoneAuth')
     public async loginWithPhone(@Body() credentials: PhoneVerification): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Login with phone');
 
+        this.setStatus(201);
         return await AuthService.phoneAuth(credentials);
-    }
-
-    @Response<IErrorResponse>(422, "Validation Failed")
-    @Post('/confirmOTP')
-    public async confirmOTP(@Body() otpConfirmation: OTPConfirmation): Promise<IApiResponse> {
-        logging.info(NAMESPACE, 'Confirm OTP');
-
-        return await AuthService.confirmOTP(otpConfirmation);
     }
 
     @Response<IErrorResponse>(422, "Validation Failed")

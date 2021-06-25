@@ -48,7 +48,7 @@ class AuthService implements CRUD {
             status: 'CONFIRMED'
         };
 
-        return await PhoneAuthModel.findOneAndUpdate({phone: phoneAuth.phone}, phoneAuth);
+        return await new PhoneAuthModel(phoneAuth).save();
     }
 
     public async readByPhone(phone: string): Promise<any> {
