@@ -12,7 +12,7 @@ import { IErrorResponse, IApiResponse } from "../interfaces/common/responses.int
 
 const NAMESPACE = 'AUTH CONTROLLER';
 @Route("/api/auth")
-@Tags('Authorization')
+@Tags('Auth')
 export class AuthController extends Controller {
 
     @Get('/all')

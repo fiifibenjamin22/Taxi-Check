@@ -12,14 +12,11 @@ import { IErrorResponse, IApiResponse } from "../interfaces/common/responses.int
 
 const NAMESPACE = 'AUTH CONTROLLER';
 @Route("/api/auth")
-@Tags('Authorization')
+@Tags('Auth')
 export class AuthController extends Controller {
 
     @Get('/all')
-    public async getAll(
-        @Query() limit?: number, 
-        @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>,
-    ): Promise<IApiResponse> {
+    public async getAll(@Query() limit?: number, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Get all users');
 
         let users: any[] = await AuthService.list(limit);
@@ -29,10 +26,7 @@ export class AuthController extends Controller {
     }
 
     @Get('/all/by/{userGroupId}')
-    public async getAllByUserGroup(
-        @Query() limit?: number, 
-        @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>,
-    ): Promise<IApiResponse> {
+    public async getAllByUserGroup(@Query() limit?: number, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Get all users');
 
         let users: any[] = await AuthService.list(limit);
@@ -43,10 +37,7 @@ export class AuthController extends Controller {
 
     @Response<IErrorResponse>(422, "Validation Failed")
     @Post('/login')
-    public async loginUser(
-        @Body() credentials: ICredentials, 
-        @Res() notAuthorized?: TsoaResponse<401, IErrorResponse>,
-    ): Promise<IApiResponse> {
+    public async loginUser(@Body() credentials: ICredentials, @Res() notAuthorized?: TsoaResponse<401, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Login user');
 
         let user: any = await AuthService.authorize(credentials);
@@ -65,10 +56,7 @@ export class AuthController extends Controller {
 
     @Response<IErrorResponse>(422, "Validation Failed")
     @Post('/confirmOTP')
-    public async confirmOTP(
-        @Body() otpConfirmation: OTPConfirmation, 
-        @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>,
-    ): Promise<IApiResponse> {
+    public async confirmOTP(@Body() otpConfirmation: OTPConfirmation, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Confirm OTP');
 
         let otpConfirmed: any = await AuthService.confirmOTP(otpConfirmation);
@@ -107,10 +95,7 @@ export class AuthController extends Controller {
     }
 
     @Get('/userGroup/all')
-    public async getAllUserGroups(
-        @Query() limit?: number, 
-        @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>,
-    ): Promise<IApiResponse> {
+    public async getAllUserGroups(@Query() limit?: number, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Get all user groups');
 
         let userGroups: any[] = await UserGroupService.list(limit);
@@ -131,10 +116,7 @@ export class AuthController extends Controller {
     }
 
     @Get('/userRole/all')
-    public async getAllUserRoles(
-        @Query() limit?: number, 
-        @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>,
-    ): Promise<IApiResponse> {
+    public async getAllUserRoles(@Query() limit?: number, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Get all user roles');
 
         let userRoles: any[] = await RoleService.list(limit);
@@ -144,10 +126,7 @@ export class AuthController extends Controller {
     }
 
     @Get('/userRole/find/by/{groupId}')
-    public async findRoleByGroupId(
-        @Path() groupId: string, 
-        @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>,
-    ): Promise<IApiResponse> {
+    public async findRoleByGroupId(@Path() groupId: string, @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Find role by group Id');
 
         let vehicle: any = await RoleService.readByGroupId(groupId);
