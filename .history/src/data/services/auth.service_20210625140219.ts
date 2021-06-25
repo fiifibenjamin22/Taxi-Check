@@ -37,7 +37,8 @@ class AuthService implements CRUD {
     }
 
     public async phoneAuth(phoneVerification: PhoneVerification): Promise<any> {
-        let otp = otpGenerator.generate(4, {digits: true, alphabets: false, upperCase: false, specialChars: false });
+        let otp = otpGenerator.generate(4, {digits: true});
+
         let phoneAuth: IPhoneAuth = <IPhoneAuth>{ phone: phoneVerification.phone, status: 'PENDING_CONFIRMATION', otp };
 
         return await PhoneAuthModel.findOneAndUpdate({phone: phoneAuth.phone}, phoneAuth, {upsert: true});

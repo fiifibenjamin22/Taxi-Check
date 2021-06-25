@@ -60,7 +60,7 @@ export class AuthController extends Controller {
         logging.info(NAMESPACE, 'Confirm OTP');
 
         let otpConfirmed: any = await AuthService.confirmOTP(otpConfirmation);
-        if (!otpConfirmed) notFoundResponse(404, { message: "Invalid otp code" });
+        if (!otpConfirmed) notFoundResponse(404, { message: "No record found" });
 
         return await AuthService.confirmOTP(otpConfirmation);
     }

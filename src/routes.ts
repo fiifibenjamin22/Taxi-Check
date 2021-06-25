@@ -62,6 +62,26 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pick_IPhoneAuth.phone_": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"phone":{"dataType":"string","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PhoneVerification": {
+        "dataType": "refAlias",
+        "type": {"ref":"Pick_IPhoneAuth.phone_","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pick_IPhoneAuth.phone-or-otp_": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"phone":{"dataType":"string","required":true},"otp":{"dataType":"string","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "OTPConfirmation": {
+        "dataType": "refAlias",
+        "type": {"ref":"Pick_IPhoneAuth.phone-or-otp_","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "IUser": {
         "dataType": "refObject",
         "properties": {
@@ -124,7 +144,7 @@ const models: TsoaRoute.Models = {
             "address": {"dataType":"nestedObjectLiteral","nestedProperties":{"ghana_post":{"dataType":"string","required":true},"postal_address":{"dataType":"string","required":true},"residential_address":{"dataType":"string","required":true}},"required":true},
             "identification": {"dataType":"nestedObjectLiteral","nestedProperties":{"number":{"dataType":"string","required":true},"id_type":{"dataType":"string","required":true}},"required":true},
             "tin": {"dataType":"string","required":true},
-            "municipal_assembly": {"dataType":"string"},
+            "terminal": {"dataType":"string","required":true},
             "created_by": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
@@ -195,8 +215,6 @@ const models: TsoaRoute.Models = {
             "chasis_number": {"dataType":"string","required":true},
             "plate_number": {"dataType":"string","required":true},
             "registration_date": {"dataType":"string","required":true},
-            "municipal_assembly": {"dataType":"string"},
-            "terminal": {"dataType":"string"},
             "owner": {"dataType":"string"},
             "driver": {"dataType":"string"},
             "created_by": {"dataType":"string","required":true},
@@ -347,6 +365,51 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.loginUser.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/auth/phoneAuth',
+            function AuthController_loginWithPhone(request: any, response: any, next: any) {
+            const args = {
+                    credentials: {"in":"body","name":"credentials","required":true,"ref":"PhoneVerification"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new AuthController();
+
+
+            const promise = controller.loginWithPhone.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/auth/confirmOTP',
+            function AuthController_confirmOTP(request: any, response: any, next: any) {
+            const args = {
+                    otpConfirmation: {"in":"body","name":"otpConfirmation","required":true,"ref":"OTPConfirmation"},
+                    notFoundResponse: {"in":"res","name":"404","required":true,"ref":"IErrorResponse"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new AuthController();
+
+
+            const promise = controller.confirmOTP.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -669,6 +732,30 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api/owner/search',
+            function OwnerController_search(request: any, response: any, next: any) {
+            const args = {
+                    filter: {"in":"query","name":"filter","dataType":"string"},
+                    limit: {"in":"query","name":"limit","dataType":"double"},
+                    notFoundResponse: {"in":"res","name":"404","required":true,"ref":"IErrorResponse"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new OwnerController();
+
+
+            const promise = controller.search.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/owner/create',
             function OwnerController_create(request: any, response: any, next: any) {
             const args = {
@@ -688,6 +775,51 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.create.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.put('/api/owner/update/:ownerId',
+            function OwnerController_update(request: any, response: any, next: any) {
+            const args = {
+                    ownerId: {"in":"path","name":"ownerId","required":true,"dataType":"string"},
+                    owner: {"in":"body","name":"owner","required":true,"ref":"IOwner"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new OwnerController();
+
+
+            const promise = controller.update.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/api/owner/delete/:ownerId',
+            function OwnerController_delete(request: any, response: any, next: any) {
+            const args = {
+                    ownerId: {"in":"path","name":"ownerId","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new OwnerController();
+
+
+            const promise = controller.delete.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

@@ -6,7 +6,6 @@ import { IAuth } from "../../domain/interfaces/auth.interface";
 import AuthModel from "../models/auth.model";
 import { IPhoneAuth } from "../../domain/interfaces/phone-auth.interface";
 import PhoneAuthModel from "../models/phone-auth.model";
-import otpGenerator from "otp-generator";
 
 export type PhoneVerification = Pick<IPhoneAuth, "phone">;
 export type OTPConfirmation = Pick<IPhoneAuth, "phone" | "otp">;
@@ -37,20 +36,27 @@ class AuthService implements CRUD {
     }
 
     public async phoneAuth(phoneVerification: PhoneVerification): Promise<any> {
-        let otp = otpGenerator.generate(4, {digits: true, alphabets: false, upperCase: false, specialChars: false });
-        let phoneAuth: IPhoneAuth = <IPhoneAuth>{ phone: phoneVerification.phone, status: 'PENDING_CONFIRMATION', otp };
+        let phoneAuth: IPhoneAuth = <IPhoneAuth>{ phone: phoneVerification.phone, status: 'PENDING_CONFIRMATION' };
 
         return await PhoneAuthModel.findOneAndUpdate({phone: phoneAuth.phone}, phoneAuth, {upsert: true});
     }
 
     public async confirmOTP(otpConfirmation: OTPConfirmation): Promise<any> {
-        let phoneAuth: IPhoneAuth = <IPhoneAuth>{
-            phone: otpConfirmation.phone,
-            otp: otpConfirmation.otp,
-            status: 'CONFIRMED'
-        };
-
-        return await PhoneAuthModel.findOneAndUpdate({phone: phoneAuth.phone, otp: phoneAuth.otp}, phoneAuth);
+        try{
+            let phoneAuth: IPhoneAuth = <IPhoneAuth>{
+                phone: otpConfirmation.phone,
+                otp: otpConfirmation.otp,
+                status: 'CONFIRMED'
+            };
+    
+            let confirmed =  await PhoneAuthModel.findOneAndUpdate({phone: phoneAuth.phone, otp: phoneAuth.otp}, phoneAuth);
+    
+            console.log(confirmed);
+    
+            return confirmed;
+        } catch(e){
+            console.log(e);
+        }
     }
 
     public async readByPhone(phone: string): Promise<any> {

@@ -96,6 +96,40 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"Pick_IPhoneAuth.phone_": {
+				"properties": {
+					"phone": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"phone"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"PhoneVerification": {
+				"$ref": "#/components/schemas/Pick_IPhoneAuth.phone_"
+			},
+			"Pick_IPhoneAuth.phone-or-otp_": {
+				"properties": {
+					"phone": {
+						"type": "string"
+					},
+					"otp": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"phone",
+					"otp"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"OTPConfirmation": {
+				"$ref": "#/components/schemas/Pick_IPhoneAuth.phone-or-otp_"
+			},
 			"IUser": {
 				"properties": {
 					"first_name": {
@@ -324,7 +358,7 @@
 					"tin": {
 						"type": "string"
 					},
-					"municipal_assembly": {
+					"terminal": {
 						"type": "string"
 					},
 					"created_by": {
@@ -340,6 +374,7 @@
 					"address",
 					"identification",
 					"tin",
+					"terminal",
 					"created_by"
 				],
 				"type": "object",
@@ -619,12 +654,6 @@
 					"registration_date": {
 						"type": "string"
 					},
-					"municipal_assembly": {
-						"type": "string"
-					},
-					"terminal": {
-						"type": "string"
-					},
 					"owner": {
 						"type": "string"
 					},
@@ -893,6 +922,100 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/ICredentials"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/auth/phoneAuth": {
+			"post": {
+				"operationId": "LoginWithPhone",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation Failed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PhoneVerification"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/auth/confirmOTP": {
+			"post": {
+				"operationId": "ConfirmOTP",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation Failed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/OTPConfirmation"
 							}
 						}
 					}
@@ -1470,6 +1593,56 @@
 				]
 			}
 		},
+		"/api/owner/search": {
+			"get": {
+				"operationId": "Search",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IApiResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Owner"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "filter",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
 		"/api/owner/create": {
 			"post": {
 				"operationId": "Create",
@@ -1503,6 +1676,74 @@
 						}
 					}
 				}
+			}
+		},
+		"/api/owner/update/{ownerId}": {
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Updated"
+					},
+					"422": {
+						"description": "Validation Failed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Owner"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "ownerId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IOwner"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/owner/delete/{ownerId}": {
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Owner"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "ownerId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/api/region/all": {
