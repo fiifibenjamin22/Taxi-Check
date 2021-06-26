@@ -12,9 +12,7 @@ export class AnalyticsController extends Controller {
     public async getOverviews(@Query() from: string, @Query() to: string): Promise<IApiResponse> {
         logging.info(NAMESPACE, 'Get all overviews');
 
-        let overviews = await AnalyticsService.getOverviews(from, to);
-
-        return { 'message': "Fetched", data: overviews };
+        return await AnalyticsService.getOverviews(from, to);
     }
 
 }
