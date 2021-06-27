@@ -61,7 +61,7 @@ class AuthService implements CRUD {
                     confirm_password: '',
                     requires_password_reset: false,
                     user_group: '6093dc55d1138b0015253f90',
-                    role: null,
+                    role: '',
                     institution_id: '',
                     user: {
                         first_name: '',
