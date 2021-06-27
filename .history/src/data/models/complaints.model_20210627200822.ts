@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 
 let complaintsSchema = new mongoose.Schema({
     vehicle_plate: String,
-    reported_by: { type: Schema.Types.ObjectId, ref: 'auth' },
+    reported_by: { type: Schema.Types.ObjectId, ref: 'users' },
     assigned_to: { type: Schema.Types.ObjectId, ref: 'users' },
     reason: String,
     comments: String,

@@ -9,9 +9,11 @@ class ComplaintsService implements CRUD {
     }
 
     public async listAllUserComplaints(_id: string, limit?: number, page?: number): Promise<any> {
-        return await ComplaintsModel.find({ reported_by: _id })
-                .populate({ path: 'reported_by', populate: { path: 'user' } })
+        try {
+            return await ComplaintsModel.find({ reported_by: _id })
+                .populate({ path: 'reported_by'})
                 .limit(limit);
+        } catch (e) { console.log(e); }
     }
 
     public async create(complaint: IComplaints): Promise<any> {
