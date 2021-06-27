@@ -9,7 +9,11 @@ class ComplaintsService implements CRUD{
     }
 
     public async create(complaint: IComplaints): Promise<any> {
-        return await new ComplaintsModel(complaint).save();
+        try{
+            return await new ComplaintsModel(complaint).save();
+        } catch(e){
+            console.log(e);
+        }
     }
 
     public async putById(id: string, complaint: IComplaints): Promise<any> {
