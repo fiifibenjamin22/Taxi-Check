@@ -2,7 +2,6 @@ import { CRUD } from "../../domain/interfaces/common/crud.interface";
 import { IComplaints } from "../../domain/interfaces/complaints.interface";
 import ComplaintsModel from "../models/complaints.model";
 import VehicleModel from "../models/vehicle.model";
-import mongoose, { Schema } from 'mongoose';
 
 class ComplaintsService implements CRUD {
     public async list(limit?: number, page?: number): Promise<any> {
@@ -12,17 +11,23 @@ class ComplaintsService implements CRUD {
 
     public async listAllUserComplaints(_id: string, limit?: number, page?: number): Promise<any> {
 
+       try{
         return await ComplaintsModel.aggregate([
-            { $match: { 'reported_by': mongoose.Types.ObjectId(_id) } },
             {
-                $lookup: {
+                $lookup:{
                     from: 'vehicles',
-                    localField: 'vehicle_plate', 
-                    foreignField: 'plate_number',
-                    as: 'vehicle'
+                    as: 'vehicle',
+                    let: { plate_number: '$_vehicle_plate'},
                 }
             }
-        ]).limit(limit);
+        ])
+       }catch(e){
+           
+       }
+        
+        // .find({ reported_by: _id })
+                // .populate({ path: 'reported_by', populate: { path: 'user' } })
+                // .limit(limit);
     }
 
     public async create(complaint: IComplaints): Promise<any> {

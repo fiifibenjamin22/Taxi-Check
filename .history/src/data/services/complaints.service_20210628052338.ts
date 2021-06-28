@@ -12,17 +12,26 @@ class ComplaintsService implements CRUD {
 
     public async listAllUserComplaints(_id: string, limit?: number, page?: number): Promise<any> {
 
-        return await ComplaintsModel.aggregate([
-            { $match: { 'reported_by': mongoose.Types.ObjectId(_id) } },
-            {
-                $lookup: {
-                    from: 'vehicles',
-                    localField: 'vehicle_plate', 
-                    foreignField: 'plate_number',
-                    as: 'vehicle'
+        try {
+            console.log(_id);
+            return await ComplaintsModel.aggregate([
+                { $match: { 'reported_by': mongoose.Types.ObjectId(_id) } },
+                {
+                    $lookup: {
+                        from: 'vehicles',
+                        localField: 'vehicle_plate', 
+                        foreignField: 'plate_number',
+                        as: 'vehicle'
+                    }
                 }
-            }
-        ]).limit(limit);
+            ])
+        } catch (e) {
+            console.log(e);
+        }
+
+        // .find({ reported_by: _id })
+        // .populate({ path: 'reported_by', populate: { path: 'user' } })
+        // .limit(limit);
     }
 
     public async create(complaint: IComplaints): Promise<any> {
