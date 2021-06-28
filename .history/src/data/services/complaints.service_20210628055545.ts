@@ -21,9 +21,7 @@ class ComplaintsService implements CRUD {
                     foreignField: 'plate_number',
                     as: 'vehicle'
                 }
-            },
-            {$unwind: "$vehicle"},
-            {$unwind: "$vehicle.driver"}
+            }
         ]);
     }
 

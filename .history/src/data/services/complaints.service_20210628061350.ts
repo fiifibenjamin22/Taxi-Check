@@ -22,8 +22,7 @@ class ComplaintsService implements CRUD {
                     as: 'vehicle'
                 }
             },
-            {$unwind: "$vehicle"},
-            {$unwind: "$vehicle.driver"}
+            {$unwind: "vehicle.driver"}
         ]);
     }
 

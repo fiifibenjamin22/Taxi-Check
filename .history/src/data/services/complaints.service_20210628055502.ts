@@ -21,10 +21,8 @@ class ComplaintsService implements CRUD {
                     foreignField: 'plate_number',
                     as: 'vehicle'
                 }
-            },
-            {$unwind: "$vehicle"},
-            {$unwind: "$vehicle.driver"}
-        ]);
+            }
+        ]).limit(limit);
     }
 
     public async create(complaint: IComplaints): Promise<any> {
