@@ -11,32 +11,10 @@ class ComplaintsService implements CRUD {
     }
 
     public async listAllUserComplaints(_id: string, limit?: number, page?: number): Promise<any> {
-        try {
-            return await ComplaintsModel.aggregate([
-                {
-                    $lookup: {
-                        from: "vehicles",
-                        localField: "vehicle_plate",
-                        foreignField: "plate_number",
-                        as: "vehicle",
-                    }
-                },
-                {
-                    $unwind: { path: "$vehicle", preserveNullAndEmptyArrays: true },
-                },
-                {
-                    $lookup: {
-                        from: "drivers",
-                        localField: "drivers._id",
-                        foreignField: "vehicle.driver",
-                        as: "vehicle.driver",
-                    }
-                },
-                {
-                    $unwind: { path: "$vehicle.driver", preserveNullAndEmptyArrays: true },
-                },
-            ]);
-        } catch (e) {
+        try{
+            return await ComplaintsModel.find({reported_by: _id})
+                .populate('vehicle_plate');
+        } catch(e){
             console.log(e);
         }
 

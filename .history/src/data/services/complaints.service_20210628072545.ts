@@ -15,26 +15,28 @@ class ComplaintsService implements CRUD {
             return await ComplaintsModel.aggregate([
                 {
                     $lookup: {
+                        from: "drivers",
+                        localField: "vehicle.driver",
+                        foreignField: "_id",
+                        as: "vehicle.driver"
+                    }
+                },
+                { $unwind: "$vehicle.driver" },
+                {
+                    $lookup: {
                         from: "vehicles",
                         localField: "vehicle_plate",
                         foreignField: "plate_number",
-                        as: "vehicle",
+                        as: "vehicle"
                     }
                 },
+                { $unwind: "$vehicle" },
                 {
-                    $unwind: { path: "$vehicle", preserveNullAndEmptyArrays: true },
-                },
-                {
-                    $lookup: {
-                        from: "drivers",
-                        localField: "drivers._id",
-                        foreignField: "vehicle.driver",
-                        as: "vehicle.driver",
+                    $group: {
+                        _id: "$_id",
+                        vehicle: { $push: "$vehicle" },
                     }
-                },
-                {
-                    $unwind: { path: "$vehicle.driver", preserveNullAndEmptyArrays: true },
-                },
+                }
             ]);
         } catch (e) {
             console.log(e);

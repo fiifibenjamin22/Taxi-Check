@@ -19,22 +19,12 @@ class ComplaintsService implements CRUD {
                         localField: "vehicle_plate",
                         foreignField: "plate_number",
                         as: "vehicle",
-                    }
-                },
-                {
-                    $unwind: { path: "$vehicle", preserveNullAndEmptyArrays: true },
-                },
-                {
-                    $lookup: {
-                        from: "drivers",
-                        localField: "drivers._id",
-                        foreignField: "vehicle.driver",
-                        as: "vehicle.driver",
-                    }
-                },
-                {
-                    $unwind: { path: "$vehicle.driver", preserveNullAndEmptyArrays: true },
-                },
+                    },
+                    $unwind: {
+                        path: "$vehicle",
+                        preserveNullAndEmptyArrays: true,
+                    },
+                }
             ]);
         } catch (e) {
             console.log(e);
