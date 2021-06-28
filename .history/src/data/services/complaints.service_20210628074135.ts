@@ -13,7 +13,6 @@ class ComplaintsService implements CRUD {
     public async listAllUserComplaints(_id: string, limit?: number, page?: number): Promise<any> {
         try {
             return await ComplaintsModel.aggregate([
-                { $match: { 'reported_by': mongoose.Types.ObjectId(_id) } },
                 {
                     $lookup: {
                         from: "vehicles",
