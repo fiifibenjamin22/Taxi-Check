@@ -19,10 +19,10 @@ class ComplaintsService implements CRUD {
                     from: 'vehicles',
                     as: 'vehicle',
                     let: { plate_number: '$vehicle_plate'},
-                    pipeline: [{$match:{ $expr:{$eq:['$plate_number', '$$plate_number']}}}]
+                    pipeline: [{$match:{ $expr:{$req:['$plate_number', '$$plate_number']}}}]
                 }
             }
-        ]);
+        ]).limit(limit);
     }
 
     public async create(complaint: IComplaints): Promise<any> {
