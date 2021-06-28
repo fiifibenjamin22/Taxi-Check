@@ -28,7 +28,7 @@ class AuthService implements CRUD {
             auth.user = user._id;
             return await new AuthModel(auth).save();
         } else {
-            return await UserModel.findOne({ 'contact.phone': auth.user.contact.phone });
+            return await AuthModel.findOne({ 'contact.phone': auth.user.contact.phone });
         }
     }
 
@@ -60,7 +60,7 @@ class AuthService implements CRUD {
             status: 'CONFIRMED'
         };
         return PhoneAuthModel.findOneAndUpdate({ phone: phoneAuth.phone, otp: phoneAuth.otp }, phoneAuth)
-            .then(async (res) => {
+            .then((res) => {
                 let newAuthUser: IAuth = <IAuth>{
                     username: phoneAuth.phone,
                     password: '',
@@ -78,8 +78,7 @@ class AuthService implements CRUD {
                     },
                     created_by: '608869575fcd030015d93a14',
                 };
-
-                return await this.create(newAuthUser);
+                return this.create(newAuthUser);
             }).catch((e) => console.log(e));
     }
 

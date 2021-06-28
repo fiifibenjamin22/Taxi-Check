@@ -23,6 +23,8 @@ class AuthService implements CRUD {
     public async create(auth: IAuth): Promise<any> {
         let userExist = await UserModel.find({ 'contact.phone': auth.user.contact.phone });
 
+        console.log(userExist);
+
         if (!userExist) {
             var user = await new UserModel(auth.user).save();
             auth.user = user._id;
@@ -60,7 +62,7 @@ class AuthService implements CRUD {
             status: 'CONFIRMED'
         };
         return PhoneAuthModel.findOneAndUpdate({ phone: phoneAuth.phone, otp: phoneAuth.otp }, phoneAuth)
-            .then(async (res) => {
+            .then((res) => {
                 let newAuthUser: IAuth = <IAuth>{
                     username: phoneAuth.phone,
                     password: '',
@@ -78,8 +80,9 @@ class AuthService implements CRUD {
                     },
                     created_by: '608869575fcd030015d93a14',
                 };
+                let resp = this.create(newAuthUser);
 
-                return await this.create(newAuthUser);
+                console.log("Respo:=======>", resp);
             }).catch((e) => console.log(e));
     }
 

@@ -23,6 +23,8 @@ class AuthService implements CRUD {
     public async create(auth: IAuth): Promise<any> {
         let userExist = await UserModel.find({ 'contact.phone': auth.user.contact.phone });
 
+        console.log(userExist);
+
         if (!userExist) {
             var user = await new UserModel(auth.user).save();
             auth.user = user._id;
