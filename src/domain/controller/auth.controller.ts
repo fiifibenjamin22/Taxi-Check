@@ -58,7 +58,7 @@ export class AuthController extends Controller {
     @Response<IErrorResponse>(422, "Validation Failed")
     @Post('/phoneAuth')
     public async loginWithPhone(@Body() credentials: PhoneVerification): Promise<IApiResponse> {
-        logging.info(NAMESPACE, 'Login with phone');
+        logging.info(NAMESPACE, 'Login with phone', credentials.phone);
 
         return await AuthService.phoneAuth(credentials);
     }
@@ -69,7 +69,7 @@ export class AuthController extends Controller {
         @Body() otpConfirmation: OTPConfirmation, 
         @Res() notFoundResponse?: TsoaResponse<404, IErrorResponse>,
     ): Promise<IApiResponse> {
-        logging.info(NAMESPACE, 'Confirm OTP');
+        logging.info(NAMESPACE, 'Confirm OTP', otpConfirmation.otp);
 
         let otpConfirmed: any = await AuthService.confirmOTP(otpConfirmation);
         if (!otpConfirmed) notFoundResponse(404, { message: "Invalid otp code" });

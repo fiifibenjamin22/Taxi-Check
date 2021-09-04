@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "africastalking": "^0.5.4",
+    "async": "^3.2.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -25,6 +26,7 @@
     "tsoa": "^3.6.1"
   },
   "devDependencies": {
+    "@types/async": "^3.2.7",
     "@types/body-parser": "^1.19.0",
     "@types/cors": "^2.8.9",
     "@types/expect": "^24.3.0",

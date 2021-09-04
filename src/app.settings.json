@@ -33,5 +33,21 @@
     "SERVER": {
         "HOSTNAME": "0.0.0.0",
         "PORT": 3000
+    },
+    "ZEE_PAY": {
+        "grant_type": "password",
+        "client_id": "108",
+        "client_secret": "aAeqAoOLt8mhHX6OkEm6e2scWuCYIXfLwCu9Vlmw",
+        "scope": "*",
+        "username": "smart@icodegh.com",
+        "password": "1Carcheck2021",
+
+
+        "LIVE_BASE_URL": "https://shop.digitaltermination.com",
+        "TEST_BASE_URL": "https://test.digitaltermination.com",
+        "JOINER": "/api/custom/transactions/tech-maxx/wallets",
+        "AUTH_TOKEN": "/oauth/token",
+        "CREDIT_WALLET": "/credit-wallet",
+        "DEBIT_WALLET": "/debit-wallet"
     }
 }

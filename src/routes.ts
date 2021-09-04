@@ -15,6 +15,8 @@ import { DriverController } from './domain/controller/driver.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { OwnerController } from './domain/controller/owner.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { PaymentsController } from './domain/controller/payments.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { RegionController } from './domain/controller/region.controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { TerminalMasterController } from './domain/controller/terminal-master.controller';
@@ -184,6 +186,34 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "IPayment": {
+        "dataType": "refObject",
+        "properties": {
+            "customerName": {"dataType":"string","required":true},
+            "mno": {"dataType":"string","required":true},
+            "amount": {"dataType":"double","required":true},
+            "msisdn": {"dataType":"string","required":true},
+            "description": {"dataType":"string","required":true},
+            "reference": {"dataType":"string","required":true},
+            "status": {"dataType":"string"},
+            "message": {"dataType":"string"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ICallback": {
+        "dataType": "refObject",
+        "properties": {
+            "zeepay_id": {"dataType":"string","required":true},
+            "reference": {"dataType":"string","required":true},
+            "status": {"dataType":"string","required":true},
+            "code": {"dataType":"string","required":true},
+            "message": {"dataType":"string","required":true},
+            "gateway_id": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "IRegion": {
         "dataType": "refObject",
         "properties": {
@@ -250,6 +280,7 @@ export function RegisterRoutes(app: express.Router) {
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
         app.get('/api/analytics/overviews',
+
             function AnalyticsController_getOverviews(request: any, response: any, next: any) {
             const args = {
                     from: {"in":"query","name":"from","required":true,"dataType":"string"},
@@ -273,6 +304,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/assembly/all',
+
             function AssemblyController_getAll(request: any, response: any, next: any) {
             const args = {
                     limit: {"in":"query","name":"limit","dataType":"double"},
@@ -296,6 +328,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/assembly/create',
+
             function AssemblyController_create(request: any, response: any, next: any) {
             const args = {
                     assembly: {"in":"body","name":"assembly","required":true,"ref":"IAssembly"},
@@ -318,6 +351,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/api/assembly/delete/:assemblyId',
+
             function AssemblyController_delete(request: any, response: any, next: any) {
             const args = {
                     assemblyId: {"in":"path","name":"assemblyId","required":true,"dataType":"string"},
@@ -340,6 +374,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/auth/all',
+
             function AuthController_getAll(request: any, response: any, next: any) {
             const args = {
                     limit: {"in":"query","name":"limit","dataType":"double"},
@@ -363,6 +398,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/auth/all/by/:userGroupId',
+
             function AuthController_getAllByUserGroup(request: any, response: any, next: any) {
             const args = {
                     limit: {"in":"query","name":"limit","dataType":"double"},
@@ -386,6 +422,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/auth/login',
+
             function AuthController_loginUser(request: any, response: any, next: any) {
             const args = {
                     credentials: {"in":"body","name":"credentials","required":true,"ref":"ICredentials"},
@@ -409,6 +446,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/auth/phoneAuth',
+
             function AuthController_loginWithPhone(request: any, response: any, next: any) {
             const args = {
                     credentials: {"in":"body","name":"credentials","required":true,"ref":"PhoneVerification"},
@@ -431,6 +469,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/auth/confirmOTP',
+
             function AuthController_confirmOTP(request: any, response: any, next: any) {
             const args = {
                     otpConfirmation: {"in":"body","name":"otpConfirmation","required":true,"ref":"OTPConfirmation"},
@@ -454,6 +493,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/auth/create',
+
             function AuthController_createUser(request: any, response: any, next: any) {
             const args = {
                     auth: {"in":"body","name":"auth","required":true,"ref":"IAuth"},
@@ -476,6 +516,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/api/auth/delete/:userId',
+
             function AuthController_delete(request: any, response: any, next: any) {
             const args = {
                     userId: {"in":"path","name":"userId","required":true,"dataType":"string"},
@@ -498,6 +539,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/auth/userGroup/create',
+
             function AuthController_createUserGroup(request: any, response: any, next: any) {
             const args = {
                     userGroup: {"in":"body","name":"userGroup","required":true,"ref":"IUserGroup"},
@@ -520,6 +562,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/auth/userGroup/all',
+
             function AuthController_getAllUserGroups(request: any, response: any, next: any) {
             const args = {
                     limit: {"in":"query","name":"limit","dataType":"double"},
@@ -543,6 +586,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/auth/userRole/create',
+
             function AuthController_createRole(request: any, response: any, next: any) {
             const args = {
                     role: {"in":"body","name":"role","required":true,"ref":"IRole"},
@@ -565,6 +609,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/auth/userRole/all',
+
             function AuthController_getAllUserRoles(request: any, response: any, next: any) {
             const args = {
                     limit: {"in":"query","name":"limit","dataType":"double"},
@@ -588,6 +633,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/auth/userRole/find/by/:groupId',
+
             function AuthController_findRoleByGroupId(request: any, response: any, next: any) {
             const args = {
                     groupId: {"in":"path","name":"groupId","required":true,"dataType":"string"},
@@ -611,6 +657,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/complaints/all',
+
             function ComplaintsController_getAll(request: any, response: any, next: any) {
             const args = {
                     limit: {"in":"query","name":"limit","dataType":"double"},
@@ -634,6 +681,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/complaints/all/by/:userId',
+
             function ComplaintsController_getAllByUser(request: any, response: any, next: any) {
             const args = {
                     userId: {"in":"path","name":"userId","required":true,"dataType":"any"},
@@ -658,6 +706,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/complaints/create',
+
             function ComplaintsController_create(request: any, response: any, next: any) {
             const args = {
                     complaints: {"in":"body","name":"complaints","required":true,"ref":"IComplaints"},
@@ -680,6 +729,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/api/complaints/update/:complaintId',
+
             function ComplaintsController_update(request: any, response: any, next: any) {
             const args = {
                     complaintId: {"in":"path","name":"complaintId","required":true,"dataType":"string"},
@@ -703,6 +753,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/api/complaints/delete/:complaintId',
+
             function ComplaintsController_delete(request: any, response: any, next: any) {
             const args = {
                     complaintId: {"in":"path","name":"complaintId","required":true,"dataType":"string"},
@@ -725,6 +776,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/driver/all',
+
             function DriverController_getAll(request: any, response: any, next: any) {
             const args = {
                     limit: {"in":"query","name":"limit","dataType":"double"},
@@ -750,6 +802,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/driver/search',
+
             function DriverController_search(request: any, response: any, next: any) {
             const args = {
                     filter: {"in":"query","name":"filter","dataType":"string"},
@@ -774,6 +827,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/driver/create',
+
             function DriverController_create(request: any, response: any, next: any) {
             const args = {
                     driver: {"in":"body","name":"driver","required":true,"ref":"IDriver"},
@@ -796,6 +850,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/api/driver/update/:driverId',
+
             function DriverController_update(request: any, response: any, next: any) {
             const args = {
                     driverId: {"in":"path","name":"driverId","required":true,"dataType":"string"},
@@ -819,6 +874,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/driver/find/by/:driverId',
+
             function DriverController_findDriverById(request: any, response: any, next: any) {
             const args = {
                     driverId: {"in":"path","name":"driverId","required":true,"dataType":"string"},
@@ -842,6 +898,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/api/driver/delete/:driverId',
+
             function DriverController_delete(request: any, response: any, next: any) {
             const args = {
                     driverId: {"in":"path","name":"driverId","required":true,"dataType":"string"},
@@ -864,6 +921,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/owner/all',
+
             function OwnerController_getAll(request: any, response: any, next: any) {
             const args = {
                     limit: {"in":"query","name":"limit","dataType":"double"},
@@ -887,6 +945,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/owner/search',
+
             function OwnerController_search(request: any, response: any, next: any) {
             const args = {
                     filter: {"in":"query","name":"filter","dataType":"string"},
@@ -911,6 +970,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/owner/create',
+
             function OwnerController_create(request: any, response: any, next: any) {
             const args = {
                     owner: {"in":"body","name":"owner","required":true,"ref":"IOwner"},
@@ -933,6 +993,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/api/owner/update/:ownerId',
+
             function OwnerController_update(request: any, response: any, next: any) {
             const args = {
                     ownerId: {"in":"path","name":"ownerId","required":true,"dataType":"string"},
@@ -956,6 +1017,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/api/owner/delete/:ownerId',
+
             function OwnerController_delete(request: any, response: any, next: any) {
             const args = {
                     ownerId: {"in":"path","name":"ownerId","required":true,"dataType":"string"},
@@ -977,7 +1039,56 @@ export function RegisterRoutes(app: express.Router) {
             promiseHandler(controller, promise, response, undefined, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/payments/credit/wallet',
+
+            function PaymentsController_makePayment(request: any, response: any, next: any) {
+            const args = {
+                    payment: {"in":"body","name":"payment","required":true,"ref":"IPayment"},
+                    notFoundResponse: {"in":"res","name":"404","required":true,"ref":"IErrorResponse"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PaymentsController();
+
+
+            const promise = controller.makePayment.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api/payments/credit/wallet/callback',
+
+            function PaymentsController_paymentCallback(request: any, response: any, next: any) {
+            const args = {
+                    callbackData: {"in":"body","name":"callbackData","required":true,"ref":"ICallback"},
+                    notFoundResponse: {"in":"res","name":"404","required":true,"ref":"IErrorResponse"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new PaymentsController();
+
+
+            const promise = controller.paymentCallback.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, undefined, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/region/all',
+
             function RegionController_getAll(request: any, response: any, next: any) {
             const args = {
                     limit: {"in":"query","name":"limit","dataType":"double"},
@@ -1001,6 +1112,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/region/create',
+
             function RegionController_create(request: any, response: any, next: any) {
             const args = {
                     region: {"in":"body","name":"region","required":true,"ref":"IRegion"},
@@ -1023,6 +1135,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/api/region/delete/:regionId',
+
             function RegionController_delete(request: any, response: any, next: any) {
             const args = {
                     regionId: {"in":"path","name":"regionId","required":true,"dataType":"string"},
@@ -1045,6 +1158,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/terminalMaster/all',
+
             function TerminalMasterController_getAll(request: any, response: any, next: any) {
             const args = {
                     limit: {"in":"query","name":"limit","dataType":"double"},
@@ -1068,6 +1182,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/terminalMaster/create',
+
             function TerminalMasterController_create(request: any, response: any, next: any) {
             const args = {
                     terminalMaster: {"in":"body","name":"terminalMaster","required":true,"ref":"ITerminalMaster"},
@@ -1090,6 +1205,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/api/terminalMaster/update/:terminalId',
+
             function TerminalMasterController_update(request: any, response: any, next: any) {
             const args = {
                     terminalId: {"in":"path","name":"terminalId","required":true,"dataType":"string"},
@@ -1113,6 +1229,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/api/terminalMaster/delete/:terminalMasterId',
+
             function TerminalMasterController_delete(request: any, response: any, next: any) {
             const args = {
                     terminalMasterId: {"in":"path","name":"terminalMasterId","required":true,"dataType":"string"},
@@ -1135,6 +1252,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/terminal/all',
+
             function TerminalController_getAll(request: any, response: any, next: any) {
             const args = {
                     assembly: {"in":"query","name":"assembly","dataType":"string"},
@@ -1161,6 +1279,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/terminal/create',
+
             function TerminalController_create(request: any, response: any, next: any) {
             const args = {
                     terminal: {"in":"body","name":"terminal","required":true,"ref":"ITerminal"},
@@ -1183,6 +1302,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/api/terminal/update/:terminalId',
+
             function TerminalController_update(request: any, response: any, next: any) {
             const args = {
                     terminalId: {"in":"path","name":"terminalId","required":true,"dataType":"string"},
@@ -1206,6 +1326,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/terminal/find/by/:terminalId',
+
             function TerminalController_findTerminalById(request: any, response: any, next: any) {
             const args = {
                     terminalId: {"in":"path","name":"terminalId","required":true,"dataType":"string"},
@@ -1229,6 +1350,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/api/terminal/delete/:terminalId',
+
             function TerminalController_delete(request: any, response: any, next: any) {
             const args = {
                     terminalId: {"in":"path","name":"terminalId","required":true,"dataType":"string"},
@@ -1251,6 +1373,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/vehicle/all',
+
             function VehicleController_getAll(request: any, response: any, next: any) {
             const args = {
                     assembly: {"in":"query","name":"assembly","dataType":"string"},
@@ -1277,6 +1400,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/api/vehicle/create',
+
             function VehicleController_create(request: any, response: any, next: any) {
             const args = {
                     newVehicle: {"in":"body","name":"newVehicle","required":true,"ref":"IVehicle"},
@@ -1299,6 +1423,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/api/vehicle/update/:vehicleId',
+
             function VehicleController_update(request: any, response: any, next: any) {
             const args = {
                     vehicleId: {"in":"path","name":"vehicleId","required":true,"dataType":"string"},
@@ -1322,6 +1447,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/vehicle/findByNumberPlate/:numberPlate',
+
             function VehicleController_getByNumberPlate(request: any, response: any, next: any) {
             const args = {
                     numberPlate: {"in":"path","name":"numberPlate","required":true,"dataType":"string"},
@@ -1345,6 +1471,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/api/vehicle/findById/:vehicleId',
+
             function VehicleController_findVehicleById(request: any, response: any, next: any) {
             const args = {
                     vehicleId: {"in":"path","name":"vehicleId","required":true,"dataType":"string"},
@@ -1368,6 +1495,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/api/vehicle/delete/:vehicleId',
+
             function VehicleController_delete(request: any, response: any, next: any) {
             const args = {
                     vehicleId: {"in":"path","name":"vehicleId","required":true,"dataType":"string"},
