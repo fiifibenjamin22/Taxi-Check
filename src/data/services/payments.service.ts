@@ -73,7 +73,7 @@ class PaymentsService {
                 "msisdn":paymentBody.msisdn,
                 "description":paymentBody.description,
                 "reference":paymentBody.reference,
-                "callback_ur": "host" + "api/payments/credit/wallet/callback"
+                "callback_ur": "https://taxi-check-api.herokuapp.com/" + "api/payments/credit/wallet/callback"
             },
             headers: {
                 "Content-Type": "application/json",
